@@ -61,7 +61,7 @@ export interface CMExpressionInputProps {
 
 const ExpressionInput = (
   {
-    url = `/api/${N9E_PATHNAME}/proxy`,
+    url = `/api/v1/metrics`,
     headers,
     value,
     onChange,
@@ -99,7 +99,8 @@ const ExpressionInput = (
         completeEnabled
           ? {
               remote: {
-                url: datasourceValue ? `${url}/${datasourceValue}` : url,
+                // /api/v1/metrics/${datasourceValue}/label/__name__/values
+                url: datasourceValue ? `/api/v1/metrics/${datasourceValue}` : url,
                 fetchFn: (resource, options = {}) => {
                   const params = options.body?.toString();
                   const search = params ? `?${params}` : '';

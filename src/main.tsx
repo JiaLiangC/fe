@@ -1,29 +1,51 @@
-/*
- * Copyright 2022 Nightingale Team
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
+// main.tsx
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { i18nInit } from './i18n'; // loaded and initialized first
+import { i18nInit } from './i18n';
 import App from './App';
 import { I18nextProvider } from 'react-i18next';
 import './theme/index.less';
 
-ReactDOM.render(
-  <I18nextProvider i18n={i18nInit}>
-    <App />
-  </I18nextProvider>,
-  document.getElementById('root'),
-);
+
+// 定义 mountApp 函数
+const mountApp = ({ element, options = {} }) => {
+  console.log('[MFE Debug] Mounting app with options:', options);
+  
+  return new Promise((resolve, reject) => {
+    try {
+      ReactDOM.render(
+        <I18nextProvider i18n={i18nInit}>
+          <App {...options} />
+        </I18nextProvider>,
+        element,
+        () => {
+          console.log('[MFE Debug] App rendered successfully');
+          resolve({
+            unmount: () => {
+              console.log('[MFE Debug] Unmounting app');
+              ReactDOM.unmountComponentAtNode(element);
+            }
+          });
+        }
+      );
+    } catch (error) {
+      console.error('[MFE Debug] Error mounting app:', error);
+      reject(error);
+    }
+  });
+};
+
+// 注册到全局
+if (typeof window !== 'undefined') {
+  window.mountApp = mountApp;
+  console.log('[MFE Debug] mountApp registered on window:', !!window.mountApp);
+}
+
+declare global {
+  interface Window {
+    mountApp: typeof mountApp;
+  }
+}
+
+
+export { mountApp };

@@ -39,7 +39,7 @@ const MetricsExplorer: React.FC<MetricsExplorer> = ({ url, datasourceValue, show
 
   useEffect(() => {
     if (show && datasourceValue) {
-      getPromData(`${url}/${datasourceValue}/api/v1/label/__name__/values`, {}).then((res) => {
+      getPromData(`/api/v1/metrics/${datasourceValue}/api/v1/label/__name__/values`, {}).then((res) => {
         setMetrics(res || []);
         setFilteredMetrics(res || []);
       });

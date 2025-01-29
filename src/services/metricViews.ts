@@ -29,7 +29,7 @@ export const getLabelValues = function (datasourceValue: number, label: string, 
   if (match) {
     params['match[]'] = match;
   }
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/label/${label}/values`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/label/${label}/values`, {
     method: RequestMethod.Get,
     params,
   }).then((res) => {
@@ -44,7 +44,7 @@ export const getLabels = function (datasourceValue: number, match: string, range
   if (match) {
     params['match[]'] = match;
   }
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/labels`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/labels`, {
     method: RequestMethod.Get,
     params,
   }).then((res) => {
@@ -53,7 +53,7 @@ export const getLabels = function (datasourceValue: number, match: string, range
 };
 
 export const getMetricValues = function (datasourceValue: number, match: string, range: IRawTimeRange) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/label/__name__/values`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/label/__name__/values`, {
     method: RequestMethod.Get,
     params: {
       ...timeRangeUnix(range),
@@ -134,7 +134,7 @@ export const getQueryRange = function (
     aggrGroups,
   });
   const requests = _.map(exprs, (expr) => {
-    return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/query_range`, {
+    return request(`/api/v1/metrics/${datasourceValue}/api/v1/query_range`, {
       method: RequestMethod.Get,
       params: {
         start: start - (start % _step!),

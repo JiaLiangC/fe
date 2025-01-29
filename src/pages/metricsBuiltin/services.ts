@@ -21,6 +21,8 @@ import { Record, PostRecord, Filter } from './types';
 
 export type { Record, PostRecord, Filter } from './types';
 
+const API_PREFIX = '/api/v1/metrics';
+
 export const getMetrics = function (
   params: Filter & {
     limit: number;
@@ -30,89 +32,89 @@ export const getMetrics = function (
   list: Record[];
   total: number;
 }> {
-  return request('/api/n9e/builtin-metrics', {
+  return request(`${API_PREFIX}/builtin-metrics`, {
     method: RequestMethod.Get,
     params: {
       ...params,
       unit: _.join(params.unit, ','),
     },
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const postMetrics = function (data): Promise<{
   [key: string]: string;
 }> {
-  return request('/api/n9e/builtin-metrics', {
+  return request(`${API_PREFIX}/builtin-metrics`, {
     method: RequestMethod.Post,
     data,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const putMetric = function (data: Record) {
-  return request('/api/n9e/builtin-metrics', {
+  return request(`${API_PREFIX}/builtin-metrics`, {
     method: RequestMethod.Put,
     data,
   });
 };
 
 export const deleteMetrics = function (ids: number[]): Promise<any> {
-  return request('/api/n9e/builtin-metrics', {
+  return request(`${API_PREFIX}/builtin-metrics`, {
     method: RequestMethod.Delete,
     data: { ids },
   });
 };
 
 export const getTypes = function (params?: { collector?: string; query?: string }): Promise<string[]> {
-  return request('/api/n9e/builtin-metrics/types', {
+  return request(`${API_PREFIX}/builtin-metrics/types`, {
     method: RequestMethod.Get,
     params,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const getDefaultTypes = function (params?: { collector?: string; query?: string }): Promise<string[]> {
-  return request('/api/n9e/builtin-metrics/types/default', {
+  return request(`${API_PREFIX}/builtin-metrics/types/default`, {
     method: RequestMethod.Get,
     params,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const getCollectors = function (params?: { typ?: string; query?: string }): Promise<string[]> {
-  return request('/api/n9e/builtin-metrics/collectors', {
+  return request(`${API_PREFIX}/builtin-metrics/collectors`, {
     method: RequestMethod.Get,
     params,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const getFilters = function (): Promise<any[]> {
-  return request('/api/n9e/builtin-metric-filters', {
+  return request(`${API_PREFIX}/builtin-metric-filters`, {
     method: RequestMethod.Get,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const postFilter = function (data): Promise<any> {
-  return request('/api/n9e/builtin-metric-filters', {
+  return request(`${API_PREFIX}/builtin-metric-filters`, {
     method: RequestMethod.Post,
     data,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const putFilter = function (data): Promise<any> {
-  return request('/api/n9e/builtin-metric-filters', {
+  return request(`${API_PREFIX}/builtin-metric-filters`, {
     method: RequestMethod.Put,
     data,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const deleteFilter = function (data): Promise<any> {
-  return request('/api/n9e/builtin-metric-filters', {
+  return request(`${API_PREFIX}/builtin-metric-filters`, {
     method: RequestMethod.Delete,
     data,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 export const buildLabelFilterAndExpression = function (data): Promise<any> {
-  return request('/api/n9e/builtin-metric-promql', {
+  return request(`${API_PREFIX}/builtin-metric-promql`, {
     method: RequestMethod.Post,
     data,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };

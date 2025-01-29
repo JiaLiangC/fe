@@ -53,7 +53,7 @@ export default function GraphPreview({ form, fieldName, promqlFieldName = 'prom_
       )
         .then((res) => {
           const series: any[] = [];
-          const dat = res.dat || [];
+          const dat = res.data || [];
           for (let i = 0; i < dat?.length; i++) {
             var item = {
               result: dat[i],

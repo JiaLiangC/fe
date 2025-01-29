@@ -11,7 +11,7 @@ interface IItem {
   status: 'enabled';
 }
 
-const apiPrefix = '/api/n9e/datasource';
+const apiPrefix = '/api/v1/metrics/datasource';
 
 export const getDataSourcePluginList = (): Promise<IItem[]> => {
   return request(`${apiPrefix}/plugin/list`, {
@@ -53,9 +53,8 @@ export const updateDataSourceStatus = (body: { id: number; status: 'enabled' | '
 };
 
 export const deleteDataSourceById = (id: string | number) => {
-  return request(apiPrefix, {
-    method: RequestMethod.Delete,
-    data: [id],
+  return request(`${apiPrefix}/${id}`, {
+    method: RequestMethod.Delete
   }).then((res) => res.data);
 };
 

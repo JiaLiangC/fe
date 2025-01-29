@@ -21,99 +21,101 @@ import { Component, ComponentPost, ComponentPut, PayloadQuery, TypeEnum, Payload
 
 export type { Component, TypeEnum, Payload };
 
+const API_PREFIX = '/api/v1/metrics';
+
 export const getComponents = function (): Promise<Component[]> {
-  return request('/api/n9e/builtin-components', {
+  return request(`${API_PREFIX}/builtin-components`, {
     method: RequestMethod.Get,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const getCates = function (params: { component_id: number; type: TypeEnum }): Promise<string[]> {
-  return request('/api/n9e/builtin-payloads/cates', {
+  return request(`${API_PREFIX}/builtin-payloads/cates`, {
     method: RequestMethod.Get,
     params,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const getPayloads = <T>(params: PayloadQuery): Promise<T> => {
-  return request('/api/n9e/builtin-payloads', {
+  return request(`${API_PREFIX}/builtin-payloads`, {
     method: RequestMethod.Get,
     params,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const getPayload = (id: number): Promise<{ content: string }> => {
-  return request(`/api/n9e/builtin-payload/${id}`, {
+  return request(`${API_PREFIX}/builtin-payload/${id}`, {
     method: RequestMethod.Get,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const getPayloadByUUID = (uuid: number): Promise<{ content: string }> => {
-  return request(`/api/n9e/builtin-payload`, {
+  return request(`${API_PREFIX}/builtin-payload`, {
     method: RequestMethod.Get,
     params: { uuid },
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const postPayloads = (data: PayloadPost[]): Promise<any> => {
-  return request('/api/n9e/builtin-payloads', {
+  return request(`${API_PREFIX}/builtin-payloads`, {
     method: RequestMethod.Post,
     data,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const putPayload = (data: PayloadPut): Promise<any> => {
-  return request('/api/n9e/builtin-payloads', {
+  return request(`${API_PREFIX}/builtin-payloads`, {
     method: RequestMethod.Put,
     data,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const deletePayloads = (ids: number[]): Promise<any> => {
-  return request('/api/n9e/builtin-payloads', {
+  return request(`${API_PREFIX}/builtin-payloads`, {
     method: RequestMethod.Delete,
     data: { ids },
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const postComponents = (data: ComponentPost[]): Promise<any> => {
-  return request('/api/n9e/builtin-components', {
+  return request(`${API_PREFIX}/builtin-components`, {
     method: RequestMethod.Post,
     data,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const putComponent = (data: ComponentPut): Promise<any> => {
-  return request('/api/n9e/builtin-components', {
+  return request(`${API_PREFIX}/builtin-components`, {
     method: RequestMethod.Put,
     data,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const deleteComponents = (ids: number[]): Promise<any> => {
-  return request('/api/n9e/builtin-components', {
+  return request(`${API_PREFIX}/builtin-components`, {
     method: RequestMethod.Delete,
     data: { ids },
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };

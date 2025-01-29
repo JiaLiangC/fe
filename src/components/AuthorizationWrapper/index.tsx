@@ -15,11 +15,12 @@ export default function index(props: Props) {
   const { perms } = useContext(CommonStateContext);
   const { allowedPerms, children, showUnauthorized } = props;
   const authorized = useMemo(() => {
-    return _.every(allowedPerms, (perm) => _.includes(perms, perm));
+    return true;
+    //return _.every(allowedPerms, (perm) => _.includes(perms, perm));
   }, [allowedPerms, perms]);
 
   if (authorized) {
-    return React.cloneElement(children, _.omit(props, ['allowedPerms', 'children', 'showUnauthorized']));
+  return React.cloneElement(children, _.omit(props, ['allowedPerms', 'children', 'showUnauthorized']));
   }
   if (showUnauthorized) {
     return <>{t('unauthorized')}</>;
@@ -30,6 +31,7 @@ export default function index(props: Props) {
 export const useIsAuthorized = (allowedPerms: string[]) => {
   const { perms } = useContext(CommonStateContext);
   return useMemo(() => {
-    return _.every(allowedPerms, (perm) => _.includes(perms, perm));
+    return true;
+    //return _.every(allowedPerms, (perm) => _.includes(perms, perm));
   }, [allowedPerms, perms]);
 };

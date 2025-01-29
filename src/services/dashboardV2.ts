@@ -22,30 +22,30 @@ import { N9E_PATHNAME } from '@/utils/constant';
 
 // 仪表盘列表
 export const getDashboards = function (id: number | string) {
-  return request(`/api/n9e/busi-group/${id}/boards`, {
+  return request(`/api/v1/metrics/boards`, {
     method: RequestMethod.Get,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 // 多个业务组的仪表盘列表
 export const getBusiGroupsDashboards = function (gids?: string) {
-  return request('/api/n9e/busi-groups/boards', {
+  return request('/api/v1/metrics/boards', {
     method: RequestMethod.Get,
     params: {
       gids,
     },
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const getBusiGroupsPublicDashboards = function () {
-  return request('/api/n9e/busi-groups/public-boards', {
+  return request('/api/v1/metrics/public-boards', {
     method: RequestMethod.Get,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
@@ -54,7 +54,7 @@ export const updateBoardPublic = function (id: number, data: any) {
     method: RequestMethod.Put,
     data,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
@@ -66,29 +66,35 @@ interface Dashboard {
 }
 // 创建仪表盘
 export const createDashboard = function (id: number, data: Dashboard) {
-  return request(`/api/n9e/busi-group/${id}/boards`, {
+  return request(`/api/v1/metrics/boards`, {
     method: RequestMethod.Post,
     data,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 // 克隆仪表盘
 export const cloneDashboard = function (busiId: number, id: number) {
-  return request(`/api/n9e/busi-group/${busiId}/board/${id}/clone`, {
+  return request(`/api/v1/metrics/board/${id}/clone`, {
     method: RequestMethod.Post,
   });
 };
 
 // 删除仪表盘
-export const removeDashboards = function (ids: number[]) {
-  return request(`/api/n9e/boards`, {
-    method: RequestMethod.Delete,
-    data: {
-      ids,
-    },
-  });
+export const removeDashboards = async function (ids: number[]) {
+  try {
+    await Promise.all(
+        ids.map(id =>
+            request(`/api/v1/metrics/board/${id}`, {
+              method: RequestMethod.Delete,
+            })
+        )
+    );
+    return true;
+  } catch (error) {
+    throw error;
+  }
 };
 
 // 导出仪表盘
@@ -98,30 +104,30 @@ export const exportDashboard = function (busiId: number | string, ids: number[])
     method: RequestMethod.Post,
     data: { ids },
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 // 获取仪表盘详情
 export const getDashboard = function (id: string | number) {
-  return request(`/api/n9e/board/${id}`, {
+  return request(`/api/v1/metrics/board/${id}`, {
     method: RequestMethod.Get,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 // 更新仪表盘 - 只能更新 name 和 tags
 export const updateDashboard = function (id: string | number, data: { name: string; ident?: string; tags: string }) {
-  return request(`/api/n9e/board/${id}`, {
+  return request(`/api/v1/metrics/board/${id}`, {
     method: RequestMethod.Put,
     data,
-  }).then((res) => res.dat);
+  }).then((res) => res.data);
 };
 
 // 更新仪表盘 - 只能更新 configs
 export const updateDashboardConfigs = function (id: string | number, data: { configs: string }) {
-  return request(`/api/n9e/board/${id}/configs`, {
+  return request(`/api/v1/metrics/board/${id}/configs`, {
     method: RequestMethod.Put,
     data,
   });
@@ -150,16 +156,16 @@ export const getBuiltinDashboard = function (data) {
     method: RequestMethod.Post,
     data,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
 export const getDashboardPure = function (id: string) {
-  return request(`/api/n9e/board/${id}/pure`, {
+  return request(`/api/v1/metrics/board/${id}/pure`, {
     method: RequestMethod.Get,
     silence: true,
   }).then((res) => {
-    return res.dat;
+    return res.data;
   });
 };
 
@@ -172,7 +178,7 @@ export const fetchHistoryRangeBatch = (data, signalKey) => {
     signals[signalKey].abort();
   }
   signals[signalKey] = controller;
-  return request(`/api/${N9E_PATHNAME}/query-range-batch`, {
+  return request(`/api/v1/metrics/query-range-batch`, {
     method: RequestMethod.Post,
     data,
     signal,
@@ -206,7 +212,7 @@ export const fetchHistoryInstantBatch = (data, signalKey) => {
     signals[signalKey].abort();
   }
   signals[signalKey] = controller;
-  return request(`/api/${N9E_PATHNAME}/query-instant-batch`, {
+  return request(`/api/v1/metrics/query-instant-batch`, {
     method: RequestMethod.Post,
     data,
     signal,
@@ -217,7 +223,7 @@ export const fetchHistoryInstantBatch = (data, signalKey) => {
 };
 
 export const getLabelNames = function (data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/labels`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/labels`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -225,7 +231,7 @@ export const getLabelNames = function (data, datasourceValue: number) {
 };
 
 export const getLabelValues = function (label, data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/label/${label}/values`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/label/${label}/values`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -233,7 +239,7 @@ export const getLabelValues = function (label, data, datasourceValue: number) {
 };
 
 export const getMetricSeries = function (data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/series`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/series`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -248,7 +254,7 @@ export const getStatusBuildinfo = (datasourceValue: number) => {
 };
 
 export const getMetricSeriesV2 = function (data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/query`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/query`, {
     method: RequestMethod.Get,
     params: {
       query: `last_over_time(${data.metric}[${data.end - data.start}s])`,
@@ -265,7 +271,7 @@ export const getMetricSeriesV2 = function (data, datasourceValue: number) {
 };
 
 export const getMetric = function (data = {}, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/label/__name__/values`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/label/__name__/values`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -273,7 +279,7 @@ export const getMetric = function (data = {}, datasourceValue: number) {
 };
 
 export const getQueryResult = function (data, datasourceValue: number) {
-  return request(`/api/${N9E_PATHNAME}/proxy/${datasourceValue}/api/v1/query`, {
+  return request(`/api/v1/metrics/${datasourceValue}/api/v1/query`, {
     method: RequestMethod.Get,
     params: { ...data },
     silence: true,
@@ -295,7 +301,7 @@ export function getESVariableResult(datasourceValue: number, index, requestBody)
 }
 
 export const boardsClones = function (data: { board_ids: number[]; bgids: number[] }) {
-  return request('/api/n9e/busi-groups/boards/clones', {
+  return request('/api/v1/metrics/boards/clone', {
     method: RequestMethod.Post,
     data,
   });

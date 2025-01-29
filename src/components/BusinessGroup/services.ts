@@ -19,13 +19,13 @@ import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
 
 export function getBusiGroups(params?: { query?: string; limit?: number; all?: boolean }) {
-  return request(`/api/n9e/busi-groups`, {
+  return request(`/api/v1/metrics/busi-groups`, {
     method: RequestMethod.Get,
     params: {
       ...(params || {}),
       limit: params?.limit || 5000,
     },
   }).then((res) => {
-    return _.sortBy(res.dat, 'name');
+    return _.sortBy(res.data, 'name');
   });
 }

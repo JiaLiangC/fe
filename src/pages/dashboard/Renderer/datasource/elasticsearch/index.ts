@@ -157,7 +157,7 @@ export default async function elasticSearchQuery(options: IOptions): Promise<Res
         });
       } else {
         dsRes = await fetchHistoryRangeBatch2({ queries: batchDsParams, exps }, signalKey);
-        const dat = dsRes.dat || [];
+        const dat = dsRes.data || [];
         for (let i = 0; i < dat?.length; i++) {
           const refId = dat[i]?.ref;
           _.forEach(dat[i]?.data, (serie) => {

@@ -136,7 +136,7 @@ export default function Graph(props: IProps) {
       if (!step) realStep = Math.max(Math.floor((end - start) / 240), 1);
       const queryStart = Date.now();
       setLoading(true);
-      getPromData(`${url}/${datasourceValue}/api/v1/query_range`, {
+      getPromData(`/api/v1/metrics/${datasourceValue}/api/v1/query_range`, {
         query: promql,
         start: moment(parsedRange.start).unix(),
         end: moment(parsedRange.end).unix(),

@@ -17,7 +17,7 @@
 import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
 
-const profileApi = 'api/n9e/self/profile';
+const profileApi = 'api/v1/metrics/self/profile';
 // 修改个人信息
 export const UpdateProfile = function (data: object) {
   return request(`/${profileApi}`, {

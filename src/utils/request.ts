@@ -67,9 +67,10 @@ request.interceptors.request.use((url, options) => {
   let headers = {
     ...options.headers,
   };
-  headers['Authorization'] = `Bearer ${localStorage.getItem(AccessTokenKey) || ''}`;
+  headers['Authorization'] = `Basic ${btoa('admin:admin')}`;
   headers['X-Language'] = i18next.language;
-  return {
+  headers['X-Requested-By'] = 'ambari';
+    return {
     url: basePrefix + url,
     options: { ...options, headers, sourcePathname: location.pathname },
   };
@@ -115,6 +116,7 @@ request.interceptors.response.use(
               };
             }
           } else {
+            // 适配ambari 修改后基本都走这里了
             // n9e 和 n9e-plus 大部分接口返回的数据结构是 { err: '', dat: {} }
             if (data.err === '' || data.status === 'success' || data.error === '') {
               return { ...data, success: true };
@@ -130,7 +132,12 @@ request.interceptors.response.use(
           }
         });
     } else if (status === 401 && !_.includes(response.url, '/api/n9e-plus/proxy') && !_.includes(response.url, '/api/n9e/proxy')) {
-      if (response.url.indexOf('/api/n9e/auth/refresh') > 0) {
+        console.log('401 Unauthorized Error:', {
+            url: response.url,
+            status,
+            options,
+        });
+      /*if (response.url.indexOf('/api/n9e/auth/refresh') > 0) {
         location.href = combineLoginURL();
       } else {
         localStorage.getItem('refresh_token')
@@ -146,7 +153,7 @@ request.interceptors.response.use(
               }
             })
           : (location.href = combineLoginURL());
-      }
+      }*/
     } else if (
       status === 403 &&
       (response.url.includes('/api/v1') || response.url.includes('/api/v2')) &&

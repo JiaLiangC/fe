@@ -20,12 +20,12 @@ import { RequestMethod } from '@/store/common';
 
 // 匿名获取数据源列表
 export function getDatasourceBriefList(): Promise<{ name: string; id: number; plugin_type: string }[]> {
-  const url = '/api/n9e/datasource/brief';
+  const url = '/api/v1/metrics/datasource/brief';
   return request(url, {
     method: RequestMethod.Get,
   })
     .then((res) => {
-      return res.dat || [];
+      return res.data || [];
     })
     .catch(() => {
       return [];
@@ -33,7 +33,7 @@ export function getDatasourceBriefList(): Promise<{ name: string; id: number; pl
 }
 
 export function getBusiGroups(query = '', limit: number = 5000) {
-  return request(`/api/n9e/busi-groups`, {
+  return request(`/api/v1/metrics/busi-groups`, {
     method: RequestMethod.Get,
     params: Object.assign(
       {
@@ -43,7 +43,7 @@ export function getBusiGroups(query = '', limit: number = 5000) {
     ),
   }).then((res) => {
     return {
-      dat: _.sortBy(res.dat, (item) => _.lowerCase(item.name)),
+      dat: _.sortBy(res.data, (item) => _.lowerCase(item.name)),
     };
   });
 }
@@ -55,7 +55,7 @@ export function getPerm(busiGroup: string, perm: 'ro' | 'rw') {
 }
 
 export function getMenuPerm() {
-  return request(`/api/n9e/self/perms`, {
+  return request(`/api/v1/metrics/self/perms`, {
     method: RequestMethod.Get,
   });
 }

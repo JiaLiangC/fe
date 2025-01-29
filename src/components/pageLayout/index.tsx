@@ -133,17 +133,17 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
                 </div>
 
                 <div className={'page-header-right-area'} style={{display: sessionStorage.getItem('menuHide') === '1' ? 'none' : undefined }}>
+                  {/* 
                   {introIcon}
                   {docFn && (
                     <a onClick={() => docFn()} style={{ marginRight: 20 }}>
                       {t('docs')}
                     </a>
                   )}
-
                   <Version />
-
+                  
                   <Space style={{ marginRight: 16 }}>
-                    {/* 整合版本关闭文档链接 */}
+                    整合版本关闭文档链接 
                     {!IS_ENT && (
                       <div style={{ marginRight: 8, position: 'relative' }}>
                         <a target='_blank' href={siteInfo?.document_url || 'https://flashcat.cloud/docs/content/flashcat-monitor/nightingale-v7/introduction/'}>
@@ -164,7 +164,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
                     <License />
                     <FeatureNotification />
                   </AdvancedWrap>
-
+                  
                   <Dropdown
                     overlay={
                       <Menu
@@ -185,6 +185,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
                       {curLanguage}
                     </a>
                   </Dropdown>
+                 
 
                     <div style={{ marginRight: 8 }}>
                       <DarkModeSelect />
@@ -197,6 +198,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
                       <DownOutlined />
                     </span>
                   </Dropdown>
+                  */}
                 </div>
               </div>
             </div>
@@ -204,6 +206,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
         </>
       )}
       {children && children}
+      {/*
       <Drawer
         closable={false}
         visible={themeVisible}
@@ -224,6 +227,7 @@ const PageLayout: React.FC<IPageLayoutProps> = ({ icon, title, rightArea, introI
           </div>
         </div>
       </Drawer>
+      */}
     </div>
   );
 };

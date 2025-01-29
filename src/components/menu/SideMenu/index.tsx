@@ -55,80 +55,80 @@ export const getMenuList = (t) => {
           key: '/object/explorer',
           label: t('快捷视图'),
         },
-        {
-          key: '/recording-rules',
-          label: t('记录规则'),
-        },
+        // {
+          // key: '/recording-rules',
+          // label: t('记录规则'),
+        // },
       ],
     },
-    {
-      key: 'log',
-      icon: <IconFont type='icon-Menu_LogAnalysis' />,
-      label: t('日志分析'),
-      children: [
-        {
-          key: '/log/explorer',
-          label: t('即时查询'),
-        },
-      ],
-    },
-    {
-      key: 'alarm',
-      icon: <IconFont type='icon-Menu_AlarmManagement' />,
-      label: t('告警管理'),
-      children: [
-        {
-          key: '/alert-rules',
-          label: t('告警规则'),
-        },
-        {
-          key: '/alert-mutes',
-          label: t('屏蔽规则'),
-        },
-        {
-          key: '/alert-subscribes',
-          label: t('订阅规则'),
-        },
-        {
-          key: '/alert-cur-events',
-          label: t('活跃告警'),
-        },
-        {
-          key: '/alert-his-events',
-          label: t('历史告警'),
-        },
-      ],
-    },
-    {
-      key: 'notification',
-      icon: <NotificationFilled />,
-      label: t('告警通知'),
-      children: [
-        {
-          key: '/help/notification-settings',
-          label: t('通知设置'),
-        },
-        {
-          key: '/help/notification-tpls',
-          label: t('通知模板'),
-        },
-      ],
-    },
-    {
-      key: 'job',
-      icon: <IconFont type='icon-Menu_AlarmSelfhealing' />,
-      label: t('告警自愈'),
-      children: [
-        {
-          key: '/job-tpls',
-          label: t('自愈脚本'),
-        },
-        {
-          key: '/job-tasks',
-          label: t('执行历史'),
-        },
-      ],
-    },
+    // {
+      // key: 'log',
+      // icon: <IconFont type='icon-Menu_LogAnalysis' />,
+      // label: t('日志分析'),
+      // children: [
+        // {
+          // key: '/log/explorer',
+          // label: t('即时查询'),
+        // },
+      // ],
+    // },
+    // {
+      // key: 'alarm',
+      // icon: <IconFont type='icon-Menu_AlarmManagement' />,
+      // label: t('告警管理'),
+      // children: [
+        // {
+          // key: '/alert-rules',
+          // label: t('告警规则'),
+        // },
+        // {
+          // key: '/alert-mutes',
+          // label: t('屏蔽规则'),
+        // },
+        // {
+          // key: '/alert-subscribes',
+          // label: t('订阅规则'),
+        // },
+        // {
+          // key: '/alert-cur-events',
+          // label: t('活跃告警'),
+        // },
+        // {
+          // key: '/alert-his-events',
+          // label: t('历史告警'),
+        // },
+      // ],
+    // },
+    // {
+      // key: 'notification',
+      // icon: <NotificationFilled />,
+      // label: t('告警通知'),
+      // children: [
+        // {
+          // key: '/help/notification-settings',
+          // label: t('通知设置'),
+        // },
+        // {
+          // key: '/help/notification-tpls',
+          // label: t('通知模板'),
+        // },
+      // ],
+    // },
+    // {
+      // key: 'job',
+      // icon: <IconFont type='icon-Menu_AlarmSelfhealing' />,
+      // label: t('告警自愈'),
+      // children: [
+        // {
+          // key: '/job-tpls',
+          // label: t('自愈脚本'),
+        // },
+        // {
+          // key: '/job-tasks',
+          // label: t('执行历史'),
+        // },
+      // ],
+    // },
     {
       key: 'targets',
       icon: <IconFont type='icon-Menu_Infrastructure' />,
@@ -140,29 +140,29 @@ export const getMenuList = (t) => {
         },
       ],
     },
-    {
-      key: 'manage',
-      icon: <IconFont type='icon-Menu_PersonnelOrganization' />,
-      label: t('人员组织'),
-      children: [
-        {
-          key: '/users',
-          label: t('用户管理'),
-        },
-        {
-          key: '/user-groups',
-          label: t('团队管理'),
-        },
-        {
-          key: '/busi-groups',
-          label: t('业务组管理'),
-        },
-        {
-          key: '/permissions',
-          label: t('权限管理'),
-        },
-      ],
-    },
+    // {
+      // key: 'manage',
+      // icon: <IconFont type='icon-Menu_PersonnelOrganization' />,
+      // label: t('人员组织'),
+      // children: [
+        // {
+          // key: '/users',
+          // label: t('用户管理'),
+        // },
+        // {
+          // key: '/user-groups',
+          // label: t('团队管理'),
+        // },
+        // {
+          // key: '/busi-groups',
+          // label: t('业务组管理'),
+        // },
+        // {
+          // key: '/permissions',
+          // label: t('权限管理'),
+        // },
+      // ],
+    // },
     {
       key: 'integrations',
       icon: <IconFont type='icon-shujujicheng' />,
@@ -179,33 +179,33 @@ export const getMenuList = (t) => {
         },
       ],
     },
-    {
-      key: 'help',
-      icon: <IconFont type='icon-Menu_SystemInformation' />,
-      label: t('系统配置'),
-      children: [
-        {
-          key: '/help/variable-configs',
-          label: t('变量设置'),
-        },
-        {
-          key: '/help/sso',
-          label: t('单点登录'),
-        },
-        {
-          key: '/help/servers',
-          label: t('告警引擎'),
-        },
-        {
-          key: '/site-settings',
-          label: t('siteInfo:title'),
-        },
-        {
-          key: '/help/version',
-          label: t('系统版本'),
-        },
-      ],
-    },
+    // {
+      // key: 'help',
+      // icon: <IconFont type='icon-Menu_SystemInformation' />,
+      // label: t('系统配置'),
+      // children: [
+        // {
+          // key: '/help/variable-configs',
+          // label: t('变量设置'),
+        // },
+        // {
+          // key: '/help/sso',
+          // label: t('单点登录'),
+        // },
+        // {
+          // key: '/help/servers',
+          // label: t('告警引擎'),
+        // },
+        // {
+          // key: '/site-settings',
+          // label: t('siteInfo:title'),
+        // },
+        // {
+          // key: '/help/version',
+          // label: t('系统版本'),
+        // },
+      // ],
+    // },
   ];
   return menuList;
 };

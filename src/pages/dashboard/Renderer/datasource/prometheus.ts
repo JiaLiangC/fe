@@ -154,7 +154,7 @@ export default async function prometheusQuery(options: IOptions): Promise<Result
       if (!_.isEmpty(batchQueryParams)) {
         if (!IS_PLUS) {
           batchQueryRes = await fetchHistoryRangeBatch({ queries: batchQueryParams, datasource_id: datasourceValue }, signalKey);
-          const dat = batchQueryRes.dat || [];
+          const dat = batchQueryRes.data || [];
           for (let i = 0; i < dat?.length; i++) {
             var item = {
               result: dat[i],
@@ -181,7 +181,7 @@ export default async function prometheusQuery(options: IOptions): Promise<Result
           }
         } else {
           batchQueryRes = await fetchHistoryRangeBatch2({ queries: batchQueryParams, exps }, signalKey);
-          const dat = batchQueryRes.dat || [];
+          const dat = batchQueryRes.data || [];
           for (let i = 0; i < dat?.length; i++) {
             const refId = dat[i]?.ref;
             const expr = _.find(batchQueryParams, { ref: dat[i]?.ref })?.ql;
@@ -213,7 +213,7 @@ export default async function prometheusQuery(options: IOptions): Promise<Result
       let batchInstantRes: any = {};
       if (!_.isEmpty(batchInstantParams)) {
         batchInstantRes = await fetchHistoryInstantBatch({ queries: batchInstantParams, datasource_id: datasourceValue }, signalKey);
-        const dat = batchInstantRes.dat || [];
+        const dat = batchInstantRes.data || [];
         for (let i = 0; i < dat?.length; i++) {
           var item = {
             result: dat[i],

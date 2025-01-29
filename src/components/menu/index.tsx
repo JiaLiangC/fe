@@ -102,22 +102,22 @@ const getMenuList = (t) => {
         },
       ],
     },
-    {
-      key: 'log',
-      icon: <IconFont type='icon-Menu_LogAnalysis' />,
-      activeIcon: <Icon component={menuIcon.LogAnalysis as any} />,
-      label: t('日志分析'),
-      children: [
-        {
-          key: '/log/explorer',
-          label: t('即时查询'),
-        },
-        {
-          key: '/log/index-patterns',
-          label: t('索引模式'),
-        },
-      ],
-    },
+    // {
+      // key: 'log',
+      // icon: <IconFont type='icon-Menu_LogAnalysis' />,
+      // activeIcon: <Icon component={menuIcon.LogAnalysis as any} />,
+      // label: t('日志分析'),
+      // children: [
+        // {
+          // key: '/log/explorer',
+          // label: t('即时查询'),
+        // },
+        // {
+          // key: '/log/index-patterns',
+          // label: t('索引模式'),
+        // },
+      // ],
+    // },
     // {
     //   key: 'trace',
     //   icon: <IconFont type='icon-Menu_LinkAnalysis' />,
@@ -147,50 +147,50 @@ const getMenuList = (t) => {
       ],
     },
 
-    {
-      key: 'job',
-      icon: <IconFont type='icon-Menu_AlarmSelfhealing' />,
-      activeIcon: <Icon component={menuIcon.AlarmSelfhealing as any} />,
-      label: t('告警自愈'),
-      children: [
-        {
-          key: '/job-tpls',
-          label: t('自愈脚本'),
-        },
-        {
-          key: '/job-tasks',
-          label: t('执行历史'),
-        },
-        {
-          key: '/ibex-settings',
-          label: t('自愈配置'),
-        },
-      ],
-    },
-    {
-      key: 'manage',
-      icon: <IconFont type='icon-Menu_PersonnelOrganization' />,
-      activeIcon: <Icon component={menuIcon.PersonnelOrganization as any} />,
-      label: t('人员组织'),
-      children: [
-        {
-          key: '/users',
-          label: t('用户管理'),
-        },
-        {
-          key: '/user-groups',
-          label: t('团队管理'),
-        },
-        {
-          key: '/busi-groups',
-          label: t('业务组管理'),
-        },
-        {
-          key: '/permissions',
-          label: t('权限管理'),
-        },
-      ],
-    },
+    // {
+      // key: 'job',
+      // icon: <IconFont type='icon-Menu_AlarmSelfhealing' />,
+      // activeIcon: <Icon component={menuIcon.AlarmSelfhealing as any} />,
+      // label: t('告警自愈'),
+      // children: [
+        // {
+          // key: '/job-tpls',
+          // label: t('自愈脚本'),
+        // },
+        // {
+          // key: '/job-tasks',
+          // label: t('执行历史'),
+        // },
+        // {
+          // key: '/ibex-settings',
+          // label: t('自愈配置'),
+        // },
+      // ],
+    // },
+    // {
+      // key: 'manage',
+      // icon: <IconFont type='icon-Menu_PersonnelOrganization' />,
+      // activeIcon: <Icon component={menuIcon.PersonnelOrganization as any} />,
+      // label: t('人员组织'),
+      // children: [
+        // {
+          // key: '/users',
+          // label: t('用户管理'),
+        // },
+        // {
+          // key: '/user-groups',
+          // label: t('团队管理'),
+        // },
+        // {
+          // key: '/busi-groups',
+          // label: t('业务组管理'),
+        // },
+        // {
+          // key: '/permissions',
+          // label: t('权限管理'),
+        // },
+      // ],
+    // },
     {
       key: 'help',
       icon: <IconFont type='icon-Menu_SystemInformation' />,
@@ -264,6 +264,7 @@ const SideMenu: FC = () => {
     }
   };
   const hideSideMenu = () => {
+    return true;
     if (
       location.pathname === '/login' ||
       location.pathname.startsWith('/chart/') ||
