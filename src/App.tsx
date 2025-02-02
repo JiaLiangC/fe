@@ -15,7 +15,7 @@
  *
  */
 import React, { useEffect, useState, createContext, useRef } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useLocation, useHistory } from 'react-router-dom';
 // Modal 会被注入的代码所使用，请不要删除
 import { ConfigProvider, Modal, Spin } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
@@ -37,6 +37,7 @@ import HeaderMenu from './components/menu/SideMenu';
 import Content from './routers';
 import { getDarkMode, updateDarkMode } from '@/utils/darkMode';
 
+
 // @ts-ignore
 import useIsPlus from 'plus:/components/useIsPlus';
 // @ts-ignore
@@ -44,6 +45,45 @@ import CustomerServiceFloatButton from 'plus:/components/CustomerServiceFloatBut
 
 import './App.less';
 import './global.variable.less';
+
+// 创建路由监听组件
+const RouteListener: React.FC = () => {
+  const location = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      console.log('[React Debug] Received 111 message:', event);
+      if (event.origin !== window.location.origin) return;
+      
+      if (event.data.type === 'navigateToReactRoute') {
+        const { path, emberRoute } = event.data;
+        console.log('[React Debug] Navigating to:', path);
+        const cleanPath = path.replace(REACT_ROUTE_PREFIX, '');
+        // console.log('[React Debug] Clean path for navigation:', cleanPath);
+        history.replace(cleanPath);
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, [history]);
+
+  useEffect(() => {
+    // 通知 Ember 路由已经改变
+    console.log('[React Debug] Emitting message:', location.pathname);
+    window.postMessage({
+      type: 'reactRouteChanged',
+      path: location.pathname,
+      search: location.search,
+      hash: location.hash
+    }, window.location.origin);
+  }, [location]);
+
+  return null; // 这是一个纯监听组件，不需要渲染任何内容
+};
 
 interface IProfile {
   admin?: boolean;
@@ -116,6 +156,9 @@ export interface ICommonState {
 }
 
 export const basePrefix = import.meta.env.VITE_PREFIX || '';
+const REACT_ROUTE_PREFIX = '/main/jialiangc';
+
+
 
 // 可以匿名访问的路由 TODO: job-task output 应该也可以匿名访问
 const anonymousRoutes = [`${basePrefix}/login`, `${basePrefix}/callback`, `${basePrefix}/chart`, `${basePrefix}/dashboards/share/`];
@@ -124,10 +167,18 @@ const anonymous = _.some(anonymousRoutes, (route) => location.pathname.startsWit
 // 初始化数据 context
 export const CommonStateContext = createContext({} as ICommonState);
 
-function App() {
+interface AppProps {
+  baseURL?: string;
+  basename?: string;
+  initialRoute?: string;
+  history: any; // 使用具体的 History 类型
+}
+
+const App: React.FC<AppProps> = ({ baseURL, basename, initialRoute,history }) => {
   const { t, i18n } = useTranslation();
   const isPlus = useIsPlus();
   const initialized = useRef(false);
+  // const history = useHistory();
   const [commonState, setCommonState] = useState<ICommonState>({
     datasourceCateOptions: [],
     groupedDatasourceList: {},
@@ -189,6 +240,11 @@ function App() {
   });
 
   useEffect(() => {
+    const rootElement = document.getElementById('root');
+    // if (!rootElement) {
+      // console.error('[React Debug] Root element not found!');
+      // return;
+    // }
     if (location.pathname === '/out-of-service') {
       initialized.current = true;
       setCommonState({ ...commonState }); // 为了触发重新渲染
@@ -295,8 +351,9 @@ function App() {
               if (message === 'CUSTOM') return;
               window.confirm(message) ? callback(true) : callback(false);
             }}
-            basename={basePrefix}
+            basename={REACT_ROUTE_PREFIX}
           >
+            <RouteListener />
             <Switch>
               <Route exact path='/job-task/:busiId/output/:taskId/:outputType' component={TaskOutput} />
               <Route exact path='/job-task/:busiId/output/:taskId/:host/:outputType' component={TaskHostOutput} />

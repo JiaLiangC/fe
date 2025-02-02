@@ -1,4 +1,8 @@
+// public/admin-mfe.js
 (function() {
+  let reactAppInstance = null;
+  let globalContainer = null;
+
   function mountApp({ element, options = {} }) {
     console.log('[MFE Debug] Starting mountApp with options:', options);
     const { baseURL, ...rest } = options;
@@ -7,12 +11,37 @@
       throw Error('Please provide the baseURL in the options for the admin MFE to load');
     }
 
+    // 如果已经有实例，直接返回并更新路由
+    if (reactAppInstance) {
+      console.log('[MFE Debug] Reusing existing React instance');
+      if (options.initialRoute) {
+        window.postMessage({
+          type: 'navigateToReactRoute',
+          path: options.initialRoute
+        }, window.location.origin);
+      }
+      return Promise.resolve(reactAppInstance);
+    }
+
+    // 创建或获取全局容器
+    if (!globalContainer) {
+      globalContainer = document.createElement('div');
+      globalContainer.id = 'global-react-root';
+      document.body.appendChild(globalContainer);
+    }
+
     function getAssetUrl(file) {
       return !file.startsWith('assets/') ? `${baseURL}assets/${file}` : `${baseURL}${file}`;
     }
 
     function loadScript(src) {
       return new Promise((resolve, reject) => {
+        // 检查脚本是否已加载
+        if (document.querySelector(`script[src="${src}"]`)) {
+          resolve();
+          return;
+        }
+
         const script = document.createElement('script');
         script.type = 'module';
         script.src = src;
@@ -27,6 +56,11 @@
     }
 
     function loadCSS(href) {
+      // 检查样式是否已加载
+      if (document.querySelector(`link[href="${href}"]`)) {
+        return;
+      }
+
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = href;
@@ -36,7 +70,22 @@
     function checkMount(retries = 10) {
       if (typeof window.mountApp === 'function') {
         console.log('[MFE Debug] mountApp function found, mounting app');
-        return window.mountApp({ element, options: rest });
+        return window.mountApp({ 
+          element: globalContainer, 
+          options: {
+            ...options,
+            onRouteChange: (path) => {
+              // 通知 Ember 路由变化
+              // window.postMessage({
+                // type: 'reactRouteChanged',
+                // path: path
+              // }, window.location.origin);
+            }
+          }
+        }).then(instance => {
+          reactAppInstance = instance;
+          return instance;
+        });
       }
       if (retries === 0) {
         throw new Error('React app mount function not found after multiple retries');
@@ -44,6 +93,19 @@
       console.log(`[MFE Debug] Waiting for mountApp function... (${retries} retries left)`);
       return new Promise(resolve => setTimeout(() => resolve(checkMount(retries - 1)), 300));
     }
+
+    // 添加消息监听器（如果还没有）
+    // if (!window._mfeMessageHandler) {
+      // window._mfeMessageHandler = function(event) {
+        // if (event.origin !== window.location.origin) return;
+        // 
+        // if (event.data.type === 'navigateToReactRoute' && reactAppInstance) {
+          // console.log('[MFE Debug] Navigating React app to:', event.data.path);
+          // reactAppInstance.history?.replace(event.data.path);
+        // }
+      // };
+      // window.addEventListener('message', window._mfeMessageHandler);
+    // }
     
     return fetch(`${baseURL}manifest.json`)
       .then(res => {
@@ -80,6 +142,22 @@
         throw error;
       });
   }
+
+  // 提供卸载方法
+  mountApp.unmount = function() {
+    if (reactAppInstance && reactAppInstance.unmount) {
+      reactAppInstance.unmount();
+      reactAppInstance = null;
+    }
+    if (window._mfeMessageHandler) {
+      window.removeEventListener('message', window._mfeMessageHandler);
+      delete window._mfeMessageHandler;
+    }
+    if (globalContainer) {
+      globalContainer.remove();
+      globalContainer = null;
+    }
+  };
 
   window.mountApp = mountApp;
   console.log('[MFE Debug] Bootstrap mountApp function registered');

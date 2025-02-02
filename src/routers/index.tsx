@@ -106,6 +106,10 @@ export default function Content() {
   const history = useHistory();
   const isPlus = useIsPlus();
   const { profile, siteInfo, perms } = useContext(CommonStateContext);
+  
+  useEffect(() => {
+    console.log('[React Debug] Current location:', location);
+  }, [location]);
 
   // useEffect(() => {
     // /**
@@ -214,9 +218,9 @@ export default function Content() {
         {_.map(plusLoader.routes, (route, i) => (
           <RouteWithSubRoutes key={i} {...route} />
         ))}
-        <Route path='/' exact>
-          <Redirect to='/metric/explorer' />
-        </Route>
+        {/* <Route path='/' exact> */}
+          {/* <Redirect to='/metric/explorer' /> */}
+        {/* </Route> */}
         <Route path='/403' component={Page403} />
         <Route path='/404' component={NotFound} />
         <Route path='/out-of-service' component={OutOfService} />
