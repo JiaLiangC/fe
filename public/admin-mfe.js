@@ -1,33 +1,32 @@
 // public/admin-mfe.js
 (function() {
   let reactAppInstance = null;
-  let globalContainer = null;
 
   function mountApp({ element, options = {} }) {
-    console.log('[MFE Debug] Starting mountApp with options:', options);
+    console.log('[MFE Debug] mountApp: Starting mountApp with options:', options);
     const { baseURL, ...rest } = options;
     
+    if (!element) {
+      throw Error('[MFE Debug] mountApp: Mount element is required');
+    }
+
     if (!baseURL) {
-      throw Error('Please provide the baseURL in the options for the admin MFE to load');
+      throw Error('[MFE Debug] mountApp: Please provide the baseURL in the options for the admin MFE to load');
     }
 
     // 如果已经有实例，直接返回并更新路由
     if (reactAppInstance) {
-      console.log('[MFE Debug] Reusing existing React instance');
-      if (options.initialRoute) {
-        window.postMessage({
-          type: 'navigateToReactRoute',
-          path: options.initialRoute
-        }, window.location.origin);
-      }
+      console.log('[MFE Debug] Reusing existing React instance just appendChild reactAppInstance');
+      reactAppInstance.history.replace(options.initialRoute);
+      element.appendChild(reactAppInstance.element);
       return Promise.resolve(reactAppInstance);
     }
 
     // 创建或获取全局容器
+    let globalContainer = document.getElementById('global-react-root');
+    console.log("[MFE Debug] mountApp: globalContainer  found ..... ")
     if (!globalContainer) {
-      globalContainer = document.createElement('div');
-      globalContainer.id = 'global-react-root';
-      document.body.appendChild(globalContainer);
+      console.log("[MFE Debug] mountApp: globalContainer not found ..... error")
     }
 
     function getAssetUrl(file) {
@@ -71,7 +70,7 @@
       if (typeof window.mountApp === 'function') {
         console.log('[MFE Debug] mountApp function found, mounting app');
         return window.mountApp({ 
-          element: globalContainer, 
+          element: element, 
           options: {
             ...options,
             onRouteChange: (path) => {
@@ -93,19 +92,6 @@
       console.log(`[MFE Debug] Waiting for mountApp function... (${retries} retries left)`);
       return new Promise(resolve => setTimeout(() => resolve(checkMount(retries - 1)), 300));
     }
-
-    // 添加消息监听器（如果还没有）
-    // if (!window._mfeMessageHandler) {
-      // window._mfeMessageHandler = function(event) {
-        // if (event.origin !== window.location.origin) return;
-        // 
-        // if (event.data.type === 'navigateToReactRoute' && reactAppInstance) {
-          // console.log('[MFE Debug] Navigating React app to:', event.data.path);
-          // reactAppInstance.history?.replace(event.data.path);
-        // }
-      // };
-      // window.addEventListener('message', window._mfeMessageHandler);
-    // }
     
     return fetch(`${baseURL}manifest.json`)
       .then(res => {
@@ -152,10 +138,6 @@
     if (window._mfeMessageHandler) {
       window.removeEventListener('message', window._mfeMessageHandler);
       delete window._mfeMessageHandler;
-    }
-    if (globalContainer) {
-      globalContainer.remove();
-      globalContainer = null;
     }
   };
 

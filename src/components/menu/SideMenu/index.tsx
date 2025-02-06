@@ -236,6 +236,7 @@ const SideMenu = () => {
     [menuList],
   );
   const hideSideMenu = useMemo(() => {
+    return true;
     if (
       location.pathname === '/login' ||
       location.pathname.startsWith('/chart/') ||
