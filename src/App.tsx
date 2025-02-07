@@ -46,6 +46,7 @@ import CustomerServiceFloatButton from 'plus:/components/CustomerServiceFloatBut
 import './App.less';
 import './global.variable.less';
 
+const REACT_ROUTE_PREFIX = '/#/main/monitoring';
 // 创建路由监听组件
 const RouteListener: React.FC = () => {
   const location = useLocation();
@@ -57,11 +58,9 @@ const RouteListener: React.FC = () => {
       if (event.origin !== window.location.origin) return;
       
       if (event.data.type === 'navigateToReactRoute') {
-        const { path, emberRoute } = event.data;
-        console.log('[React Debug] Navigating to:', path);
+        const { path } = event.data;
         const cleanPath = path.replace(REACT_ROUTE_PREFIX, '');
-        // console.log('[React Debug] Clean path for navigation:', cleanPath);
-        history.replace(cleanPath);
+        console.log('[React Debug] Navigating to:', cleanPath);
       }
     };
 
@@ -71,16 +70,14 @@ const RouteListener: React.FC = () => {
     };
   }, [history]);
 
-  useEffect(() => {
+  // useEffect(() => {
     // 通知 Ember 路由已经改变
-    console.log('[React Debug] Emitting message:', location.pathname);
-    window.postMessage({
-      type: 'reactRouteChanged',
-      path: location.pathname,
-      search: location.search,
-      hash: location.hash
-    }, window.location.origin);
-  }, [location]);
+    // console.log('[React Debug] Emitting message:', location.pathname);
+    // window.postMessage({
+      // type: 'reactRouteChanged',
+      // path: location.pathname,
+    // }, window.location.origin);
+  // }, [location.pathname]);
 
   return null; // 这是一个纯监听组件，不需要渲染任何内容
 };
@@ -156,7 +153,7 @@ export interface ICommonState {
 }
 
 export const basePrefix = import.meta.env.VITE_PREFIX || '';
-const REACT_ROUTE_PREFIX = '/main/jialiangc';
+
 
 
 

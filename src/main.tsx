@@ -29,7 +29,7 @@ const history = createBrowserHistory();
 
 // 定义 mountApp 函数
 const mountApp = ({ element, options = {} as MountOptions }: MountParams): Promise<MFEInstance> => {
-  console.log('[MFE Debug] Mounting app with options:', options);
+  console.log('[React Debug] Mounting app with options:', options);
   
   return new Promise((resolve, reject) => {
     try {
@@ -38,10 +38,6 @@ const mountApp = ({ element, options = {} as MountOptions }: MountParams): Promi
         options.onRouteChange?.(location.pathname);
       });
 
-      // 如果提供了初始路由，先设置
-      if (options.initialRoute) {
-        history.replace(options.initialRoute);
-      }
 
       ReactDOM.render(
         <I18nextProvider i18n={i18nInit}>

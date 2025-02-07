@@ -1,6 +1,6 @@
 // public/admin-mfe.js
 (function() {
-  let reactAppInstance = null;
+  window.reactAppInstance = window.reactAppInstance || null;
 
   function mountApp({ element, options = {} }) {
     console.log('[MFE Debug] mountApp: Starting mountApp with options:', options);
@@ -14,10 +14,9 @@
       throw Error('[MFE Debug] mountApp: Please provide the baseURL in the options for the admin MFE to load');
     }
 
-    // 如果已经有实例，直接返回并更新路由
-    if (reactAppInstance) {
+    // 如果已经有实例，直接返回并更新路由，并没有执行到
+    if (window.reactAppInstance) {
       console.log('[MFE Debug] Reusing existing React instance just appendChild reactAppInstance');
-      reactAppInstance.history.replace(options.initialRoute);
       element.appendChild(reactAppInstance.element);
       return Promise.resolve(reactAppInstance);
     }
