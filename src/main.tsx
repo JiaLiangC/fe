@@ -34,7 +34,7 @@ const mountApp = ({ element, options = {} as MountOptions }: MountParams): Promi
   return new Promise((resolve, reject) => {
     try {
       // 监听路由变化
-      const unlisten = history.listen((location) => {
+      const unlisten = history.listen(({ location }) => {
         options.onRouteChange?.(location.pathname);
       });
 

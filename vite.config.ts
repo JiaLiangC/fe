@@ -22,7 +22,32 @@ import prefixPlugin from './plugins/vite-plugin-prefix';
 
 const reactSvgPlugin = require('./plugins/svg');
 
-const chunk2 = [
+// 优化 chunks 分组，减少重复依赖
+const chunk1 = [
+  'react', 
+  'react-router-dom', 
+  'react-dom',
+];
+
+const uiChunk = [
+  'antd',
+  '@ant-design/icons',
+  'moment',
+];
+
+const utilChunk = [
+  'lodash',
+  'umi-request',
+  'ahooks',
+  'color',
+];
+
+const visualChunk = [
+  'react-grid-layout',
+  'd3',
+];
+
+const editorChunk = [
   '@codemirror/autocomplete',
   '@codemirror/highlight',
   '@codemirror/lint',
@@ -31,10 +56,9 @@ const chunk2 = [
   '@codemirror/view',
   'codemirror-promql',
   '@codemirror/basic-setup',
+  'react-ace',
 ];
-const chunk3 = ['react-ace'];
-const chunk1 = ['react', 'react-router-dom', 'react-dom', 'moment', '@ant-design/icons', 'umi-request', 'lodash', 'react-grid-layout', 'd3', 'ahooks', 'color'];
-const antdChunk = ['antd'];
+
 const excelChunk = ['file-saver', 'exceljs'];
 
 // https://vitejs.dev/config/
@@ -64,6 +88,19 @@ export default defineConfig(({ mode }) => {
       //
       prefixPlugin(baseName),
     ],
+    // 优化依赖预构建
+    optimizeDeps: {
+      include: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        'antd',
+        'lodash',
+        '@ant-design/icons',
+      ],
+      // 强制预构建这些依赖
+      force: true
+    },
     define: {},
     resolve: {
       alias: [
@@ -86,24 +123,40 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
+      // 启用构建缓存
+      cache: true,
+      // 使用 esbuild 压缩，更快
+      minify: 'esbuild',
+      // 禁用 source map 加快构建
+      sourcemap: false,
+      // 启用多线程构建
+      threads: true,
+      // 调整警告限制
+      chunkSizeWarningLimit: 800,
       manifest: true,
       commonjsOptions: {
-        ignoreTryCatch: false, // https://github.com/wbkd/react-flow/issues/1840
+        ignoreTryCatch: false,
       },
       outDir: 'pub',
-      chunkSizeWarningLimit: 650,
-      sourcemap: false,
       rollupOptions: {
         output: {
+          // 优化分包策略
           manualChunks: {
-            vendor: chunk1,
-            vendor1: chunk2,
-            vendor2: chunk3,
-            antdChunk: antdChunk,
-            excelChunk,
+            'react-vendor': chunk1,
+            'ui-vendor': uiChunk,
+            'util-vendor': utilChunk,
+            'visual-vendor': visualChunk,
+            'editor-vendor': editorChunk,
+            'excel-vendor': excelChunk,
           },
+          // 优化资源输出
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          entryFileNames: 'assets/js/[name]-[hash].js',
+          assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
         },
       },
+      // 修改目标环境为更现代的版本
+      target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
     },
     css: {
       preprocessorOptions: {
@@ -136,5 +189,12 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
+    // 修改 esbuild 配置
+    esbuild: {
+      // 修改目标环境为更现代的版本
+      target: 'es2020',
+      jsx: 'automatic',
+      treeShaking: true,
+    }
   };
 });

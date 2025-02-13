@@ -2,12 +2,12 @@
   "name": "n9e-fe",
   "version": "v7.7.0",
   "scripts": {
-    "dev": "vite --port 8765 --host",
-    "dev:advanced": "vite --port 8765 --host --mode advanced",
-    "build": "tsc && cross-env NODE_OPTIONS=--max-old-space-size=6096 vite build",
-    "build:advanced": "node comb_feats ${npm_config_custom_options} && tsc && cross-env NODE_OPTIONS=--max-old-space-size=6096 vite build --mode advanced",
-    "build:prefix": "node comb_feats ${npm_config_custom_options} && tsc && cross-env NODE_OPTIONS=--max-old-space-size=6096 VITE_PREFIX=/flashcat vite build --mode advanced",
-    "serve": "vite preview --debug"
+    "dev": "pnpm exec vite --port 8765 --host",
+    "dev:advanced": "pnpm exec vite --port 8765 --host --mode advanced",
+    "build": "pnpm exec tsc && cross-env NODE_OPTIONS=--max-old-space-size=6096 pnpm exec vite build",
+    "build:advanced": "node comb_feats ${npm_config_custom_options} && pnpm exec tsc && cross-env NODE_OPTIONS=--max-old-space-size=6096 pnpm exec vite build --mode advanced",
+    "build:prefix": "node comb_feats ${npm_config_custom_options} && pnpm exec tsc && cross-env NODE_OPTIONS=--max-old-space-size=6096 VITE_PREFIX=/flashcat pnpm exec vite build --mode advanced",
+    "serve": "pnpm exec vite preview --debug"
   },
   "dependencies": {
     "@ant-design/graphs": "^1.3.6",
@@ -59,7 +59,7 @@
     "js-encrypt": "^2.3.4",
     "jsencrypt": "^3.3.2",
     "json-2-csv": "^3.18.0",
-    "lezer": "^0.13.5",
+    "@lezer/lr": "^0.15.0",
     "lezer-promql": "^0.22.0",
     "lodash": "^4.17.21",
     "logfmt": "1.2.x",
@@ -95,7 +95,14 @@
     "tween-functions": "1.2.x",
     "umi-request": "^1.3.5",
     "use-antd-resizable-header": "^2.9.5",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "history": "^5.3.0",
+    "lru-cache": "^6.0.0",
+    "memoize-one": "^6.0.0",
+    "pinyin-pro": "^3.19.6",
+    "rc-picker": "^3.14.6",
+    "react-router": "^5.2.0",
+    "@lezer/common": "^0.15.12"
   },
   "devDependencies": {
     "@rollup/pluginutils": "^4.1.1",
@@ -120,7 +127,19 @@
     "ts-node": "^10.9.1",
     "typescript": "4.9.4",
     "vite": "^2.1.5",
-    "vite-plugin-react-svg": "^0.2.0"
+    "vite-plugin-react-svg": "^0.2.0",
+    "@codemirror/commands": "^0.19.0",
+    "@codemirror/comment": "^0.19.0",
+    "@codemirror/history": "^0.19.0",
+    "@codemirror/matchbrackets": "^0.19.0",
+    "@codemirror/search": "^0.19.0",
+    "@codemirror/closebrackets": "^0.19.0",
+    "@types/history": "^5.0.0",
+    "@types/memoize-one": "^5.1.2",
+    "@types/react-router": "^5.1.20",
+    "@codemirror/language": "^0.19.0",
+    "@codemirror/autocomplete": "^0.19.0",
+    "codemirror": "^6.0.0"
   },
   "overrides": {
     "@types/react": "^17.0.14"
