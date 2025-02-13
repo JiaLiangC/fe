@@ -1,7 +1,5 @@
-import React, { useContext } from 'react';
-import _ from 'lodash';
-import MDEditor from '@uiw/react-md-editor';
-import { CommonStateContext } from '@/App';
+import React from 'react';
+import { Input } from 'antd';
 
 interface Props {
   value?: string;
@@ -11,28 +9,22 @@ interface Props {
 }
 
 export default function Instructions(props: Props) {
-  const { darkMode } = useContext(CommonStateContext);
-  const { value, onChange, editabled, setReadmeEditabled } = props;
+  const { value, onChange, editabled } = props;
 
   return (
-    <div className='builtin-w-md-editor' data-color-mode={darkMode ? 'dark' : 'light'}>
+    <div className='builtin-instructions'>
       {editabled ? (
-        <MDEditor
-          height='100%'
+        <Input.TextArea
+          style={{ height: '100%' }}
           value={value}
-          onChange={(newValue) => {
-            onChange(newValue || '');
+          onChange={(e) => {
+            onChange(e.target.value);
           }}
         />
       ) : (
-        <MDEditor.Markdown
-          source={value}
-          rehypeRewrite={(node: any) => {
-            if (_.includes(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], node.tagName)) {
-              node.children = node.children.filter((item) => item.tagName != 'a');
-            }
-          }}
-        />
+        <div style={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
+          {value}
+        </div>
       )}
     </div>
   );

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import _ from 'lodash';
 import { Drawer, Space, Spin } from 'antd';
 import { ExportOutlined } from '@ant-design/icons';
-import MDEditor from '@uiw/react-md-editor';
 import ModalHOC, { ModalWrapProps } from '../ModalHOC';
 import './style.less';
 
@@ -12,7 +10,7 @@ interface Props {
   width?: string | number;
   title: string;
   documentPath: string;
-  type?: 'md' | 'iframe';
+  type?: 'text' | 'iframe';
   onClose?: (destroy: () => void) => void;
 }
 
@@ -23,12 +21,12 @@ const filenameMap = {
 };
 
 function index(props: Props & ModalWrapProps) {
-  const { visible, destroy, darkMode, language = 'zh_CN', title, width = '60%', documentPath, onClose, type = 'md' } = props;
+  const { visible, destroy, language = 'zh_CN', title, width = '60%', documentPath, onClose, type = 'text' } = props;
   const [document, setDocument] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (documentPath && type === 'md') {
+    if (documentPath && type === 'text') {
       fetch(`${documentPath}/${language}.md`)
         .then((res) => {
           return res.text();
@@ -62,16 +60,9 @@ function index(props: Props & ModalWrapProps) {
       }}
       visible={visible}
     >
-      {type === 'md' && (
-        <div data-color-mode={darkMode ? 'dark' : 'light'}>
-          <MDEditor.Markdown
-            source={document}
-            rehypeRewrite={(node: any) => {
-              if (_.includes(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'], node.tagName)) {
-                node.children = node.children.filter((item) => item.tagName != 'a');
-              }
-            }}
-          />
+      {type === 'text' && (
+        <div style={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace' }}>
+          {document}
         </div>
       )}
       {type === 'iframe' && (

@@ -15,11 +15,12 @@
  *
  */
 import React, { useContext } from 'react';
-import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/mode-sh';
-import 'ace-builds/src-noconflict/theme-monokai';
-import 'ace-builds/src-noconflict/theme-kuroir';
 import { CommonStateContext } from '@/App';
+// 暂时注释掉 ace-editor 相关导入
+// import AceEditor from 'react-ace';
+// import 'ace-builds/src-noconflict/mode-sh';
+// import 'ace-builds/src-noconflict/theme-github';
+// import 'ace-builds/src-noconflict/ext-language_tools';
 
 interface Props {
   height: string;
@@ -31,29 +32,22 @@ interface Props {
 export default function Editor(props: Props) {
   const { darkMode } = useContext(CommonStateContext);
   return (
-    <AceEditor
-      placeholder='Placeholder Text'
-      style={{ width: '100%' }}
-      height={props.height}
-      mode='sh'
-      theme={darkMode ? 'monokai' : 'kuroir'}
-      name='blah2'
-      fontSize={14}
-      showPrintMargin={false}
-      showGutter
-      readOnly={props.readOnly}
-      highlightActiveLine
-      setOptions={{
-        enableBasicAutocompletion: true,
-        enableLiveAutocompletion: true,
-        enableSnippets: true,
-        showLineNumbers: true,
-        tabSize: 2,
+    <textarea
+      style={{ 
+        width: '100%', 
+        height: props.height,
+        fontSize: '14px',
+        padding: '8px',
+        border: '1px solid #d9d9d9',
+        borderRadius: '2px',
+        backgroundColor: darkMode ? '#1e1e1e' : '#fff',
+        color: darkMode ? '#fff' : '#000'
       }}
+      readOnly={props.readOnly}
       value={props.value}
-      onChange={(newValue) => {
+      onChange={(e) => {
         if (props.onChange) {
-          props.onChange(newValue);
+          props.onChange(e.target.value);
         }
       }}
     />

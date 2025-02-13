@@ -97,9 +97,20 @@ export default defineConfig(({ mode }) => {
         'antd',
         'lodash',
         '@ant-design/icons',
+        // 添加更多频繁使用的依赖
+        'moment',
+        'ahooks',
+        '@codemirror/state',
+        '@codemirror/view',
+        'codemirror-promql',
+        'd3',
+        'exceljs',
+        'file-saver'
       ],
-      // 强制预构建这些依赖
-      force: true
+      // 开启依赖预构建缓存
+      force: false,
+      // 添加缓存目录
+      cacheDir: 'node_modules/.vite'
     },
     define: {},
     resolve: {
@@ -125,12 +136,14 @@ export default defineConfig(({ mode }) => {
     build: {
       // 启用构建缓存
       cache: true,
-      // 使用 esbuild 压缩，更快
+      // 使用更快的压缩器
       minify: 'esbuild',
       // 禁用 source map 加快构建
       sourcemap: false,
       // 启用多线程构建
       threads: true,
+      // 设置构建缓存目录
+      cacheDir: 'node_modules/.vite_build_cache',
       // 调整警告限制
       chunkSizeWarningLimit: 800,
       manifest: true,
@@ -139,6 +152,7 @@ export default defineConfig(({ mode }) => {
       },
       outDir: 'pub',
       rollupOptions: {
+        external: ['#minpath', '#minproc'],
         output: {
           // 优化分包策略
           manualChunks: {

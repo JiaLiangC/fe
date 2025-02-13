@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useLayoutEffect, useRef, useImperativeHandle, useContext } from 'react';
+import React, { useEffect, useState, useLayoutEffect, useRef, useImperativeHandle, useContext, ReactNode } from 'react';
 import { Button, Row, Col, Drawer, Tag, Table, Dropdown, Menu, Tooltip } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
 import { useHistory, Link } from 'react-router-dom';
-import { ReactNode } from 'react-markdown/lib/react-markdown';
 import _, { throttle } from 'lodash';
 import moment from 'moment';
 import { useDebounceFn } from 'ahooks';

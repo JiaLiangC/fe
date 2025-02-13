@@ -1,6 +1,5 @@
 import React from 'react';
 import { markdown } from '@codemirror/lang-markdown';
-import ReactMarkdown from 'react-markdown';
 import _ from 'lodash';
 import FieldWithEditor, { generateRules } from './components/FieldWithEditor';
 
@@ -24,7 +23,7 @@ export default function Dingtalk(props: IProps) {
       record={record}
       extensions={[markdown()]}
       renderPreview={(newValue) => {
-        return <ReactMarkdown>{newValue || ''}</ReactMarkdown>;
+        return <pre>{newValue || ''}</pre>;
       }}
       limitSize={LIMIT_SIZE}
       titleExtra='Markdown'
