@@ -27,9 +27,33 @@ export const UpdateProfile = function (data: object) {
 };
 
 export const GetProfile = function () {
-  return request(`/${profileApi}`, {
-    method: RequestMethod.Get,
-  });
+  const profileData = {
+    "dat": {
+      "id": 1,
+      "username": "root",
+      "nickname": "超管",
+      "phone": "",
+      "email": "",
+      "portrait": "",
+      "roles": [
+        "Admin"
+      ],
+      "contacts": {},
+      "maintainer": 0,
+      "create_at": 1737513100,
+      "create_by": "system",
+      "update_at": 1737513100,
+      "update_by": "system",
+      "belong": "",
+      "admin": true,
+      "user_groups": null,
+      "busi_groups": null,
+      "last_active_time": 0
+    },
+    "err": ""
+  };
+
+  return Promise.resolve(JSON.parse(JSON.stringify(profileData)));
 };
 
 const secretApi = 'api/n9e/self/token';

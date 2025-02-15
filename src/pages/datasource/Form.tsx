@@ -59,7 +59,7 @@ export default function FormCpt() {
         message.success(action === 'add' ? t('common:success.add') : t('common:success.modify'));
         setTimeout(() => {
           history.push({
-            pathname: '/help/source',
+            pathname: '/monitoring/help/source',
           });
         }, 2000);
       })
@@ -87,7 +87,7 @@ export default function FormCpt() {
             crumbs={[
               {
                 text: t('title'),
-                link: '/help/source',
+                link: '/monitoring/help/source',
               },
               {
                 text: type!,

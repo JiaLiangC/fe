@@ -265,7 +265,7 @@ export default function index(props: IProps) {
                           {_.map(invalidDatasourceIds, (item) => {
                             const result = _.find(fullDatasourceList, { id: item });
                             if (result) {
-                              let url = `/help/source/edit/${result.plugin_type}/${result.id}`;
+                              let url = `/monitoring/help/source/edit/${result.plugin_type}/${result.id}`;
                               if (import.meta.env.VITE_IS_ENT === 'true') {
                                 const cateMap = {
                                   timeseries: 'datasource',

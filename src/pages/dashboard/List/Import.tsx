@@ -251,6 +251,7 @@ function Import(props: IProps & ModalWrapProps) {
       ...data,
       tags: '',
       configs: JSON.stringify(data.configs),
+      display_locations: '',
     })
       .then(() => {
         message.success(t('common:success.import'));
@@ -403,6 +404,7 @@ function Import(props: IProps & ModalWrapProps) {
               name: vals.name,
               ident: vals.ident,
               tags: _.join(vals.tags, ' '),
+              display_locations: '',
               configs: JSON.stringify({
                 mode: 'iframe',
                 iframe_url: vals.iframe_url,

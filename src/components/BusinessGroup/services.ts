@@ -17,15 +17,26 @@
 import _ from 'lodash';
 import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
+import { basePrefix } from '@/App';
 
 export function getBusiGroups(params?: { query?: string; limit?: number; all?: boolean }) {
-  return request(`/api/v1/metrics/busi-groups`, {
-    method: RequestMethod.Get,
-    params: {
-      ...(params || {}),
-      limit: params?.limit || 5000,
-    },
-  }).then((res) => {
-    return _.sortBy(res.data, 'name');
-  });
+  const busiGroupsData = {
+    "data": [
+      {
+        "id": 1,
+        "name": "Default Busi Group",
+        "label_enable": 0,
+        "label_value": "",
+        "create_at": 1737513101,
+        "create_by": "root",
+        "update_at": 1737513101,
+        "update_by": "root",
+        "user_groups": null
+      }
+    ],
+    "err": ""
+  };
+
+  console.log('[Debug] getBusiGroups mock data:', busiGroupsData);
+  return Promise.resolve(JSON.parse(JSON.stringify(busiGroupsData)));
 }

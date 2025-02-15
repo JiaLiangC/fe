@@ -29,7 +29,7 @@ export default function TimeSeriesDetail(props: Props) {
       visible={visible}
       footer={
         <Button style={{ float: 'right' }}>
-          <Link to={`/help/source/edit/${data.plugin_type}/${data.id}`}>{t('common:btn.edit')}</Link>
+          <Link to={`/monitoring/help/source/edit/${data.plugin_type}/${data.id}`}>{t('common:btn.edit')}</Link>
         </Button>
       }
     >

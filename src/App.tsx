@@ -31,7 +31,6 @@ import { getBusiGroups, getDatasourceBriefList, getMenuPerm } from '@/services/c
 import { getLicense } from '@/components/AdvancedWrap';
 import { getVersions } from '@/components/pageLayout/Version/services';
 import { getCleanBusinessGroupIds, getDefaultBusiness, getVaildBusinessGroup } from '@/components/BusinessGroup';
-import Feedback from '@/components/Feedback';
 import { getN9eConfig } from '@/pages/siteSettings/services';
 import HeaderMenu from './components/menu/SideMenu';
 import Content from './routers';
@@ -45,8 +44,7 @@ import CustomerServiceFloatButton from 'plus:/components/CustomerServiceFloatBut
 
 import './App.less';
 import './global.variable.less';
-
-const REACT_ROUTE_PREFIX = '/#/main/monitoring';
+const REACT_ROUTE_PREFIX = '/#/main';
 // 创建路由监听组件
 const RouteListener: React.FC = () => {
   const location = useLocation();
@@ -155,8 +153,6 @@ export interface ICommonState {
 export const basePrefix = import.meta.env.VITE_PREFIX || '';
 
 
-
-
 // 可以匿名访问的路由 TODO: job-task output 应该也可以匿名访问
 const anonymousRoutes = [`${basePrefix}/login`, `${basePrefix}/callback`, `${basePrefix}/chart`, `${basePrefix}/dashboards/share/`];
 // 判断是否是匿名访问的路由
@@ -175,7 +171,7 @@ const App: React.FC<AppProps> = ({ baseURL, basename, initialRoute,history }) =>
   const { t, i18n } = useTranslation();
   const isPlus = useIsPlus();
   const initialized = useRef(false);
-  // const history = useHistory();
+
   const [commonState, setCommonState] = useState<ICommonState>({
     datasourceCateOptions: [],
     groupedDatasourceList: {},
@@ -238,10 +234,6 @@ const App: React.FC<AppProps> = ({ baseURL, basename, initialRoute,history }) =>
 
   useEffect(() => {
     const rootElement = document.getElementById('root');
-    // if (!rootElement) {
-      // console.error('[React Debug] Root element not found!');
-      // return;
-    // }
     if (location.pathname === '/out-of-service') {
       initialized.current = true;
       setCommonState({ ...commonState }); // 为了触发重新渲染
@@ -359,7 +351,6 @@ const App: React.FC<AppProps> = ({ baseURL, basename, initialRoute,history }) =>
                 <Content />
               </>
             </Switch>
-            <Feedback />
           </Router>
         </ConfigProvider>
       </CommonStateContext.Provider>

@@ -75,6 +75,9 @@ import { Jobs as StrategyBrain } from 'plus:/datasource/anomaly';
 import plusLoader from 'plus:/utils/loader';
 // @ts-ignore
 import useIsPlus from 'plus:/components/useIsPlus';
+import MonitorViewsContainer from '@/pages/monitor/components/MonitorViewsContainer';
+import DashBoardMetrics from '@/pages/metrics/dashboard';
+import ServiceMetrics from '@/pages/metrics/service';
 
 const Packages = dynamicPackages();
 let lazyRoutes = Packages.reduce((result: any, module: Entry) => {
@@ -135,79 +138,84 @@ export default function Content() {
   return (
     <div className='content'>
       <Switch>
-        <Route path='/demo' component={Demo} />
-        <Route path='/overview' component={Overview} />
-        <Route path='/login' component={Login} exact />
-        <Route path='/callback' component={LoginCallback} exact />
-        <Route path='/callback/cas' component={LoginCallbackCAS} exact />
-        <Route path='/callback/oauth' component={LoginCallbackOAuth} exact />
-        <Route path='/metric/explorer' component={MetricExplore} exact />
-        <Route path='/log/explorer' component={LogExplore} exact />
-        <Route path='/log/index-patterns' component={IndexPatterns} exact />
-        <Route path='/log/index-patterns/:id' component={IndexPatternFields} exact />
+        {/* <Route path='/demo' component={Demo} /> */}
+        {/* <Route path='/overview' component={Overview} /> */}
+        {/* <Route path='/login' component={Login} exact /> */}
+        {/* <Route path='/callback' component={LoginCallback} exact /> */}
+        {/* <Route path='/callback/cas' component={LoginCallbackCAS} exact /> */}
+        {/* <Route path='/callback/oauth' component={LoginCallbackOAuth} exact /> */}
+        {/* <Route path='/metric/explorer' component={MetricExplore} exact /> */}
+        <Route path='/monitoring/metric/explorer' component={MetricExplore} exact />
+        {/* <Route path='/log/explorer' component={LogExplore} exact /> */}
+        {/* <Route path='/log/index-patterns' component={IndexPatterns} exact /> */}
+        {/* <Route path='/log/index-patterns/:id' component={IndexPatternFields} exact /> */}
         <Route path='/object/explorer' component={ObjectExplore} exact />
         <Route path='/busi-groups' component={Business} />
         <Route path='/users' component={Users} />
         <Route path='/user-groups' component={Groups} />
         <Route path='/account/profile/:tab' component={Profile} />
 
-        <Route path='/dashboard/:id' exact component={DashboardDetail} />
-        <Route path='/dashboards/:id' exact component={DashboardDetail} />
-        <Route path='/dashboards/share/:id' component={DashboardShare} />
-        <Route path='/dashboards' component={Dashboard} />
+        <Route path='/monitoring/dashboard/:id' exact component={DashboardDetail} />
+        <Route path='/monitoring/dashboards/:id' exact component={DashboardDetail} />
+        <Route path='/monitoring/dashboards/share/:id' component={DashboardShare} />
+        <Route path='/monitoring/dashboards' component={Dashboard} />
+        
+        <Route 
+          path='/dashboard/metrics'
+          render={() => <DashBoardMetrics />} 
+        />
         <Route path='/chart/:ids' component={Chart} />
 
-        <Route exact path='/alert-rules/add/:bgid' component={AlertRuleAdd} />
-        <Route exact path='/alert-rules/edit/:id' component={AlertRuleEdit} />
-        <Route exact path='/alert-rules' component={AlertRules} />
-        <Route exact path='/alert-rules/brain/:id' component={StrategyBrain} />
-        <Route exact path='/alert-mutes' component={Shield} />
-        <Route exact path='/alert-mutes/add/:from?' component={AddShield} />
-        <Route exact path='/alert-mutes/edit/:id' component={ShieldEdit} />
-        <Route exact path='/alert-subscribes' component={Subscribe} />
-        <Route exact path='/alert-subscribes/add' component={SubscribeAdd} />
-        <Route exact path='/alert-subscribes/edit/:id' component={SubscribeEdit} />
+        {/* <Route exact path='/alert-rules/add/:bgid' component={AlertRuleAdd} /> */}
+        {/* <Route exact path='/alert-rules/edit/:id' component={AlertRuleEdit} /> */}
+        {/* <Route exact path='/alert-rules' component={AlertRules} /> */}
+        {/* <Route exact path='/alert-rules/brain/:id' component={StrategyBrain} /> */}
+        {/* <Route exact path='/alert-mutes' component={Shield} /> */}
+        {/* <Route exact path='/alert-mutes/add/:from?' component={AddShield} /> */}
+        {/* <Route exact path='/alert-mutes/edit/:id' component={ShieldEdit} /> */}
+        {/* <Route exact path='/alert-subscribes' component={Subscribe} /> */}
+        {/* <Route exact path='/alert-subscribes/add' component={SubscribeAdd} /> */}
+        {/* <Route exact path='/alert-subscribes/edit/:id' component={SubscribeEdit} /> */}
 
-        {!isPlus && [
-          <Route key='recording-rules' exact path='/recording-rules/:id?' component={RecordingRule} />,
-          <Route key='recording-rules-add' exact path='/recording-rules/add/:group_id' component={RecordingRuleAdd} />,
-          <Route key='recording-rules-edit' exact path='/recording-rules/edit/:id' component={RecordingRuleEdit} />,
-        ]}
+        {/* <Route exact path='/alert-cur-events' component={Event} /> */}
+        {/* <Route exact path='/alert-his-events' component={historyEvents} /> */}
+        {/* <Route exact path='/alert-cur-events/:eventId' component={EventDetail} /> */}
+        {/* <Route exact path='/alert-his-events/:eventId' component={EventDetail} /> */}
+        <Route exact path='/monitoring/machines' component={Targets} />
 
-        <Route exact path='/alert-cur-events' component={Event} />
-        <Route exact path='/alert-his-events' component={historyEvents} />
-        <Route exact path='/alert-cur-events/:eventId' component={EventDetail} />
-        <Route exact path='/alert-his-events/:eventId' component={EventDetail} />
-        <Route exact path='/targets' component={Targets} />
-
-        <Route exact path='/job-tpls' component={TaskTpl} />
-        <Route exact path='/job-tpls/add' component={TaskTplAdd} />
-        <Route exact path='/job-tpls/add/task' component={TaskAdd} />
-        <Route exact path='/job-tpls/:id/detail' component={TaskTplDetail} />
-        <Route exact path='/job-tpls/:id/modify' component={TaskTplModify} />
-        <Route exact path='/job-tpls/:id/clone' component={TaskTplClone} />
-        <Route exact path='/job-tasks' component={Task} />
-        <Route exact path='/job-tasks/add' component={TaskAdd} />
-        <Route exact path='/job-tasks/:id/result' component={TaskResult} />
-        <Route exact path='/job-tasks/:id/detail' component={TaskDetail} />
+        {/* <Route exact path='/job-tpls' component={TaskTpl} /> */}
+        {/* <Route exact path='/job-tpls/add' component={TaskTplAdd} /> */}
+        {/* <Route exact path='/job-tpls/add/task' component={TaskAdd} /> */}
+        {/* <Route exact path='/job-tpls/:id/detail' component={TaskTplDetail} /> */}
+        {/* <Route exact path='/job-tpls/:id/modify' component={TaskTplModify} /> */}
+        {/* <Route exact path='/job-tpls/:id/clone' component={TaskTplClone} /> */}
+        {/* <Route exact path='/job-tasks' component={Task} /> */}
+        {/* <Route exact path='/job-tasks/add' component={TaskAdd} /> */}
+        {/* <Route exact path='/job-tasks/:id/result' component={TaskResult} /> */}
+        {/* <Route exact path='/job-tasks/:id/detail' component={TaskDetail} /> */}
 
         <Route exact path='/help/version' component={Version} />
         <Route exact path='/help/servers' component={Servers} />
-        <Route exact path='/help/source' component={Datasource} />
-        <Route exact path='/help/source/:action/:type' component={DatasourceAdd} />
-        <Route exact path='/help/source/:action/:type/:id' component={DatasourceAdd} />
-        <Route exact path='/help/sso' component={SSOConfigs} />
-        <Route exact path='/help/notification-tpls' component={NotificationTpls} />
-        <Route exact path='/help/notification-settings' component={NotificationSettings} />
-        <Route exact path='/help/migrate' component={MigrateDashboards} />
+        <Route exact path='/monitoring/help/source' component={Datasource} />
+        <Route exact path='/monitoring/help/source/:action/:type' component={DatasourceAdd} />
+        <Route exact path='/monitoring/help/source/:action/:type/:id' component={DatasourceAdd} />
+        <Route exact path='/monitoring/help/sso' component={SSOConfigs} />
+        <Route exact path='/monitoring/help/notification-tpls' component={NotificationTpls} />
+        <Route exact path='/monitoring/help/notification-settings' component={NotificationSettings} />
+        <Route exact path='/monitoring/help/migrate' component={MigrateDashboards} />
         <Route exact path='/help/variable-configs' component={VariableConfigs} />
 
-        <Route exact path='/trace/explorer' component={TraceExplorer} />
-        <Route exact path='/trace/dependencies' component={TraceDependencies} />
+        {/* <Route exact path='/trace/explorer' component={TraceExplorer} /> */}
+        {/* <Route exact path='/trace/dependencies' component={TraceDependencies} /> */}
 
         <Route exact path='/permissions' component={Permissions} />
 
         <Route exact path='/site-settings' component={SiteSettings} />
+
+        <Route 
+          path='/services/:serviceName/metrics'
+          component={ServiceMetrics}
+        />
 
         {lazyRoutes.map((route, i) => (
           <RouteWithSubRoutes key={i} {...route} />

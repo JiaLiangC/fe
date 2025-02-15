@@ -4,15 +4,16 @@
 
   function mountApp({ element, options = {} }) {
     console.log('[MFE Debug] mountApp: Starting mountApp with options:', options);
-    const { baseURL, ...rest } = options;
+    const assetPrefix = '/';  // Hardcoded assetPrefix
     
     if (!element) {
       throw Error('[MFE Debug] mountApp: Mount element is required');
     }
 
-    if (!baseURL) {
-      throw Error('[MFE Debug] mountApp: Please provide the baseURL in the options for the admin MFE to load');
-    }
+    console.log("base url is "+assetPrefix)
+    // if (!baseURL) {
+      // throw Error('[MFE Debug] mountApp: Please provide the baseURL in the options for the admin MFE to load');
+    // }
 
     // 如果已经有实例，直接返回并更新路由，并没有执行到
     if (window.reactAppInstance) {
@@ -29,7 +30,7 @@
     }
 
     function getAssetUrl(file) {
-      return !file.startsWith('assets/') ? `${baseURL}assets/${file}` : `${baseURL}${file}`;
+      return !file.startsWith('assets/') ? `${assetPrefix}assets/${file}` : `${assetPrefix}${file}`;
     }
 
     function loadScript(src) {
@@ -92,7 +93,7 @@
       return new Promise(resolve => setTimeout(() => resolve(checkMount(retries - 1)), 300));
     }
     
-    return fetch(`${baseURL}manifest.json`)
+    return fetch(`${assetPrefix}manifest.json`)
       .then(res => {
         if (!res.ok) {
           throw new Error(`Failed to fetch manifest: ${res.status} ${res.statusText}`);

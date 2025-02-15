@@ -17,9 +17,13 @@ export default function SourceCard(props: Props) {
   return (
     <Row className='settings-datasource' gutter={[16, 16]}>
       {_.map(sourceMap, (item) => {
+        const type = item.type.includes('.')
+          ? _.toLower(item.type.split('.')[0])
+          : _.toLower(item.type);
+        
         return (
           <Col span={4} key={item.name}>
-            <Link to={`/${urlPrefix}/add/${item.type.includes('.') ? _.toLower(item.type).split('.')[0] : _.toLower(item.type)}`}>
+            <Link to={`${urlPrefix.startsWith('/') ? '' : '/'}${urlPrefix}/add/${type}`.replace(/\/+/g, '/')}>
               <div className='builtin-cates-grid-item'>
                 <img src={item.logo} width={48} height={48} alt={item.name} />
                 <div>{item.name}</div>

@@ -1,4 +1,6 @@
 const zh_CN = {
+  displayLocations: '大盘显示位置',
+  Select_display_locations: '选择大盘显示位置',
   title: '监控仪表盘',
   list: '仪表盘列表',
   back_icon_tip: '返回上一页，没有上一页则返回仪表盘列表',

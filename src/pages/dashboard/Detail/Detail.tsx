@@ -59,6 +59,7 @@ interface IProps {
   gobackPath?: string;
   builtinParams?: any;
   onLoaded?: (dashboard: Dashboard['configs']) => boolean;
+  id?: string;
 }
 
 export const dashboardTimeCacheKey = 'dashboard-timeRangePicker-value';
@@ -117,14 +118,15 @@ const getDefaultTimeRange = (id, query, dashboardDefaultRangeIndex?) => {
 };
 
 export default function DetailV2(props: IProps) {
-  const { isPreview = false, isBuiltin = false, gobackPath, builtinParams } = props;
+  const { isPreview = false, isBuiltin = false, gobackPath, builtinParams, id: propId } = props;
   const { t, i18n } = useTranslation('dashboard');
   const history = useHistory();
   const { datasourceList, profile, dashboardDefaultRangeIndex, dashboardSaveMode, perms, groupedDatasourceList, darkMode } = useContext(CommonStateContext);
-  const isAuthorized = _.includes(perms, '/dashboards/put') && !isPreview;
+  const isAuthorized = _.includes(perms, '/monitoring/dashboards/put') && !isPreview;
   const [dashboardMeta, setDashboardMeta] = useGlobalState('dashboardMeta');
   const [panelClipboard, setPanelClipboard] = useGlobalState('panelClipboard');
   let { id } = useParams<URLParam>();
+  id = propId || id;
   const query = queryString.parse(useLocation().search);
   if (isBuiltin) {
     id = builtinParamsToID(query);
@@ -242,6 +244,7 @@ export default function DetailV2(props: IProps) {
   useInterval(() => {
     if (import.meta.env.PROD && dashboard.id) {
       getDashboardPure(_.toString(dashboard.id)).then((res) => {
+        console.log("detail.tsx getDashboardPure: "+res);
         if (updateAtRef.current && res.update_at > updateAtRef.current) {
           if (editable) setEditable(false);
         } else {

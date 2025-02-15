@@ -47,6 +47,7 @@ function index(props: Props & ModalWrapProps) {
         form.setFieldsValue({
           graphTooltip: configs.graphTooltip,
           graphZoom: configs.graphZoom,
+          display_locations: res.display_locations || '',
         });
       });
     }
@@ -66,6 +67,7 @@ function index(props: Props & ModalWrapProps) {
               name: values.name,
               ident: values.ident,
               tags: _.join(values.tags, ' '),
+              display_locations: values.display_locations,
             });
             message.success(t('common:success.edit'));
           } else if (action === 'create' && busiId) {
@@ -73,10 +75,11 @@ function index(props: Props & ModalWrapProps) {
               name: values.name,
               ident: values.ident,
               tags: _.join(values.tags, ' '),
+              display_locations: values.display_locations,
               configs: JSON.stringify({
                 var: [],
                 panels: [],
-                version: '3.0.0',
+                version: '3.0.0'
               }),
             });
             message.success(t('common:success.create'));
@@ -107,6 +110,7 @@ function index(props: Props & ModalWrapProps) {
           tags: initialValues?.tags ? _.split(initialValues.tags, ' ') : undefined,
           graphTooltip: _.get(initialValues, 'configs.graphTooltip', 'default'),
           graphZoom: _.get(initialValues, 'configs.graphZoom', 'default'),
+          display_locations: initialValues?.display_locations ? initialValues.display_locations.split(',') : [],
         }}
       >
         <Form.Item
@@ -168,6 +172,24 @@ function index(props: Props & ModalWrapProps) {
               },
             ]}
           />
+        </Form.Item>
+        <Form.Item label={t('displayLocations')} name='display_locations'>
+          <Select 
+            mode='multiple' 
+            placeholder={t('Select_display_locations')}
+            onChange={(values) => {
+              form.setFieldsValue({
+                display_locations: values.join(',')
+              });
+            }}
+          >
+            <Select.Option value="Dashboard">Dashboard</Select.Option>
+            <Select.Option value="HDFS">HDFS</Select.Option>
+            <Select.Option value="YARN">YARN</Select.Option>
+            <Select.Option value="ZooKeeper">ZooKeeper</Select.Option>
+            <Select.Option value="Hosts">Hosts</Select.Option>
+            <Select.Option value="Others">Others...</Select.Option>
+          </Select>
         </Form.Item>
       </Form>
     </Modal>

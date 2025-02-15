@@ -182,7 +182,7 @@ export default function Title(props: IProps) {
                         <Menu.Item
                           key={item.id}
                           onClick={() => {
-                            history.push(`/dashboards/${item.ident || item.id}`);
+                            history.push(`/monitoring/dashboards/${item.ident || item.id}`);
                             setDashboardListDropdownVisible(false);
                             setDashboardListDropdownSearch('');
                           }}

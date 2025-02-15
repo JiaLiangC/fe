@@ -198,7 +198,7 @@ const getMenuList = (t) => {
       label: t('系统配置'),
       children: [
         {
-          key: '/help/source',
+          key: '/monitoring/help/source',
           label: t('数据源'),
         },
         {
@@ -268,7 +268,7 @@ const SideMenu: FC = () => {
     if (
       location.pathname === '/login' ||
       location.pathname.startsWith('/chart/') ||
-      location.pathname.startsWith('/dashboards/share/') ||
+      location.pathname.startsWith('/monitoring/dashboards/share/') ||
       location.pathname === '/callback' ||
       location.pathname.indexOf('/polaris/screen') === 0
     ) {

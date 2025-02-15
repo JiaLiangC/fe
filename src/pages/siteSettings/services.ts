@@ -2,11 +2,7 @@ import request from '@/utils/request';
 import { RequestMethod } from '@/store/common';
 
 export const getN9eConfig = function (key: string) {
-  return request('/api/v1/metrics/site-info', {
-    method: RequestMethod.Get,
-    params: { key },
-    silence: true,
-  }).then((res) => res.dat || '');
+  return Promise.resolve('');
 };
 
 export const putN9eConfig = function (data: { ckey: string; cval: string }) {

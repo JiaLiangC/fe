@@ -160,7 +160,7 @@ export default function index() {
                         <Link
                           className='table-active-text'
                           to={{
-                            pathname: `/dashboards/${record.ident || record.id}`,
+                            pathname: `/monitoring/dashboards/${record.ident || record.id}`,
                             search: gids === '-1' ? '__public__=true' : '', // 加上 __public__ 参数，用于在详情页判断是否为公开仪表盘
                           }}
                         >
@@ -232,7 +232,7 @@ export default function index() {
                                     <Link
                                       target='_blank'
                                       to={{
-                                        pathname: `/dashboards/share/${record.id}`,
+                                        pathname: `/monitoring/dashboards/share/${record.id}`,
                                         search: 'themeMode=dark',
                                       }}
                                     >
@@ -243,7 +243,7 @@ export default function index() {
                                     <Link
                                       target='_blank'
                                       to={{
-                                        pathname: `/dashboards/share/${record.id}`,
+                                        pathname: `/monitoring/dashboards/share/${record.id}`,
                                         search: 'themeMode=light',
                                       }}
                                     >
@@ -256,7 +256,7 @@ export default function index() {
                               <Link
                                 target='_blank'
                                 to={{
-                                  pathname: `/dashboards/share/${record.id}`,
+                                  pathname: `/monitoring/dashboards/share/${record.id}`,
                                 }}
                               >
                                 <ShareAltOutlined /> {t(`public.cate.${record.public_cate}`)}

@@ -273,4 +273,5 @@ export interface IDashboard {
   configs: IDashboardConfig;
   public?: number;
   group_id: number;
+  display_locations: string; // 展示位置的配置，支持多个位置
 }

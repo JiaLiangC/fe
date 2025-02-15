@@ -170,7 +170,7 @@ export const getMenuList = (t) => {
       label: t('integrations'),
       children: [
         {
-          key: '/help/source',
+          key: '/monitoring/help/source',
           label: t('数据源'),
         },
         {
@@ -241,7 +241,7 @@ const SideMenu = () => {
       location.pathname === '/login' ||
       location.pathname.startsWith('/chart/') ||
       location.pathname.startsWith('/events/screen/') ||
-      location.pathname.startsWith('/dashboards/share/') ||
+      location.pathname.startsWith('/monitoring/dashboards/share/') ||
       location.pathname === '/callback' ||
       location.pathname.indexOf('/polaris/screen') === 0 ||
       location.pathname.indexOf('/template/screens/detail') === 0

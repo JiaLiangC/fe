@@ -10,19 +10,13 @@ export interface Versions {
 }
 
 export const getVersions = function (): Promise<Versions> {
-  return request('/api/v1/metrics/versions', {
-    method: RequestMethod.Get,
-  }).then((res) => {
-    const data = _.isPlainObject(res.dat) ? res.dat : {};
-    if (semver.valid(data.version) && semver.valid(data.github_verison) && semver.gt(data.github_verison, data.version)) {
-      return {
-        ...data,
-        newVersion: true,
-      };
-    }
-    return {
-      ...data,
-      newVersion: false,
-    };
-  });
+  const versionData = {
+    "dat": {
+      "github_verison": "v3.0.0",
+      "version": "v3.0.0"
+    },
+    "err": ""
+  };
+
+  return Promise.resolve(JSON.parse(JSON.stringify(versionData)));
 };

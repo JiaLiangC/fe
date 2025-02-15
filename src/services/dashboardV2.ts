@@ -62,13 +62,21 @@ interface Dashboard {
   name: string;
   ident?: string;
   tags: string;
+  display_locations: string; // Comma-separated string
   configs?: string;
 }
+
 // 创建仪表盘
 export const createDashboard = function (id: number, data: Dashboard) {
   return request(`/api/v1/metrics/boards`, {
     method: RequestMethod.Post,
-    data,
+    data: {
+      ...data,
+      // Ensure display_locations is a string
+      display_locations: Array.isArray(data.display_locations) 
+        ? data.display_locations.join(',') 
+        : data.display_locations || '',
+    },
   }).then((res) => {
     return res.data;
   });
@@ -109,20 +117,39 @@ export const exportDashboard = function (busiId: number | string, ids: number[])
 };
 
 // 获取仪表盘详情
-export const getDashboard = function (id: string | number) {
+export const getDashboard = function (id: number | string) {
   return request(`/api/v1/metrics/board/${id}`, {
     method: RequestMethod.Get,
   }).then((res) => {
-    return res.data;
+    return {
+      ...res.data,
+      display_locations: res.data.display_locations ? res.data.display_locations.split(',') : [],
+    };
   });
 };
 
-// 更新仪表盘 - 只能更新 name 和 tags
-export const updateDashboard = function (id: string | number, data: { name: string; ident?: string; tags: string }) {
+// Add this interface
+interface DashboardUpdate {
+  name: string;
+  ident: string;
+  tags: string;
+  display_locations: string;
+}
+
+// Update the function signature
+export const updateDashboard = function (id: number, data: Partial<Dashboard>) {
   return request(`/api/v1/metrics/board/${id}`, {
     method: RequestMethod.Put,
-    data,
-  }).then((res) => res.data);
+    data: {
+      ...data,
+      // Ensure display_locations is a string
+      display_locations: Array.isArray(data.display_locations) 
+        ? data.display_locations.join(',') 
+        : data.display_locations || '',
+    },
+  }).then((res) => {
+    return res.data;
+  });
 };
 
 // 更新仪表盘 - 只能更新 configs

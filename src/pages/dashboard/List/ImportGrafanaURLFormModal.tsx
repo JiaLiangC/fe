@@ -62,7 +62,8 @@ function index(props: Props & ModalWrapProps) {
             const result = await updateDashboard(initialValues.id, {
               name: values.name,
               ident: values.ident,
-              tags: _.join(values.tags, ' '),
+              tags: values.tags,
+              display_locations: values.display_locations,
             });
             message.success(t('common:success.edit'));
             if (result) {
