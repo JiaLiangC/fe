@@ -75,7 +75,7 @@ function index(props: IProps) {
   const themeMode = darkMode ? 'dark' : 'light';
   const { editable, dashboard, setDashboard, setAllowedLeave, range, variableConfig, panels, isPreview, setPanels, onShareClick, onUpdated } = props;
   const roles = _.get(profile, 'roles', []);
-  const isAuthorized = _.includes(perms, '/dashboards/put') && !isPreview;
+  const isAuthorized = true;
   const layoutInitialized = useRef(false);
   const allowUpdateDashboardConfigs = useRef(false);
   const reactGridLayoutDefaultProps = {

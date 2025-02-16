@@ -164,7 +164,7 @@ export default function Content() {
           path='/dashboard/metrics'
           render={() => <DashBoardMetrics />} 
         />
-        <Route path='/chart/:ids' component={Chart} />
+        <Route path='/monitoring/chart/:ids' component={Chart} />
 
         {/* <Route exact path='/alert-rules/add/:bgid' component={AlertRuleAdd} /> */}
         {/* <Route exact path='/alert-rules/edit/:id' component={AlertRuleEdit} /> */}

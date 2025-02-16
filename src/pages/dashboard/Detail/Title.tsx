@@ -141,13 +141,13 @@ export default function Title(props: IProps) {
                 className='back_icon'
                 onClick={() => {
                   goBack(history).catch(() => {
-                    history.push(props.gobackPath || '/dashboards');
+                    history.push(props.gobackPath || '/monitoring/dashboards');
                   });
                 }}
               />
             </Tooltip>
             <Space className='pr1'>
-              <Link to={props.gobackPath || '/dashboards'}>{isBuiltin ? t('builtInComponents:title') : t('list')}</Link>
+              <Link to={props.gobackPath || '/monitoring/dashboards'}>{isBuiltin ? t('builtInComponents:title') : t('list')}</Link>
               {'>'}
             </Space>
           </Space>

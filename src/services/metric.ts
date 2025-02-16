@@ -50,14 +50,14 @@ export const getQueryBench = function (data?: { series_num: number; point_num: n
 
 // 分享图表 存临时数据
 export const SetTmpChartData = function (data: { configs: string }[]) {
-  return request(`/api/n9e/share-charts`, {
+  return request(`/api/v1/metrics/share-charts`, {
     method: RequestMethod.Post,
     data,
   });
 };
 // 分享图表 读临时数据
 export const GetTmpChartData = function (ids: string) {
-  return request(`/api/n9e/share-charts?ids=${ids}`, {
+  return request(`/api/v1/metrics/share-charts?ids=${ids}`, {
     method: RequestMethod.Get,
   });
 };

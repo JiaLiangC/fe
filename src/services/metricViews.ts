@@ -200,7 +200,7 @@ export const deleteMetricView = function (data) {
 };
 
 export const setTmpChartData = function (data: { configs: string }[]) {
-  return request(`/api/n9e/share-charts`, {
+  return request(`/api/v1/metrics/share-charts`, {
     method: RequestMethod.Post,
     data,
   });

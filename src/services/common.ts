@@ -70,7 +70,7 @@ export function getPerm(busiGroup: string, perm: 'ro' | 'rw') {
 export function getMenuPerm() {
   const menuPermData = {
     "dat": [
-      "/dashboards",
+      "/monitoring/dashboards",
       "/monitoring/dashboards/add",
       "/monitoring/dashboards/put",
       "/monitoring/dashboards/del",

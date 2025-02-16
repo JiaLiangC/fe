@@ -390,8 +390,10 @@ export default function DetailV2(props: IProps) {
                         configs: JSON.stringify(serielData),
                       },
                     ]).then((res) => {
-                      const ids = res.dat;
-                      window.open(basePrefix + '/chart/' + ids);
+                      console.log("detail.tsx res: "+res);
+                      const ids = res.data;
+                      console.log("detail.tsx ids: "+ids);
+                      window.open(basePrefix + '/#/main/monitoring/chart/' + ids);
                     });
                   }}
                   onUpdated={(res) => {

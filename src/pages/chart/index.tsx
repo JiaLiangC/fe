@@ -57,7 +57,7 @@ export default function Chart() {
 
   const initChart = () => {
     GetTmpChartData(ids).then((res) => {
-      const data = res.dat
+      const data = res.data
         .filter((item) => !!item)
         .map((item) => {
           return { ...JSON.parse(item.configs), ref: React.createRef() };

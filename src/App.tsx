@@ -241,7 +241,8 @@ const App: React.FC<AppProps> = ({ baseURL, basename, initialRoute,history }) =>
     }
     try {
       (async () => {
-        const iconLink = document.querySelector("link[rel~='icon']") as any;
+        // 删除 favicon 相关代码
+        // const iconLink = document.querySelector("link[rel~='icon']") as any;
         let siteInfo;
         const siteInfoStr = await getN9eConfig('site_info');
         if (siteInfoStr) {
@@ -252,9 +253,9 @@ const App: React.FC<AppProps> = ({ baseURL, basename, initialRoute,history }) =>
           }
         }
         document.title = siteInfo?.page_title || 'Nightingale';
-        if (iconLink) {
-          iconLink.href = siteInfo?.favicon_url || '/image/favicon.ico';
-        }
+        // if (iconLink) {
+          // iconLink.href = siteInfo?.favicon_url || '/image/favicon.ico';
+        // }
         // 非匿名访问，需要初始化一些公共数据
         if (!anonymous) {
           const { dat: profile } = await GetProfile();
