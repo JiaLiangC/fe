@@ -236,7 +236,7 @@ export const regCheck = function (data: { tags_pattern?: Object; func?: string; 
 };
 
 export const getHosts = (params) => {
-  return request(`/api/n9e/targets`, {
+  return request(`/api/v1/metrics/targets`, {
     method: RequestMethod.Get,
     params,
   });

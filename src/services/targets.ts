@@ -19,7 +19,7 @@ import { RequestMethod } from '@/store/common';
 
 // 获取监控对象列表
 export function getMonObjectList(params) {
-  let url = '/api/n9e/targets';
+  let url = '/api/v1/metrics/targets';
   if (import.meta.env.VITE_IS_PRO === 'true') {
     url = '/api/n9e-plus/targets';
   }
@@ -39,7 +39,7 @@ export function unbindTags(data) {
 
 // 获取监控对象标签列表
 export function getTargetTags(params) {
-  return request(`/api/n9e/targets/tags`, {
+  return request(`/api/v1/metrics/targets/tags`, {
     method: RequestMethod.Get,
     params,
   });
@@ -47,7 +47,7 @@ export function getTargetTags(params) {
 
 // 绑定/解绑标签
 export function bindOrUnbindTags(isBind, data) {
-  return request(`/api/n9e/targets/tags`, {
+  return request(`/api/v1/metrics/targets/tags`, {
     method: isBind ? RequestMethod.Post : RequestMethod.Delete,
     data,
   });
@@ -55,7 +55,7 @@ export function bindOrUnbindTags(isBind, data) {
 
 // 修改业务组
 export function moveTargetBusi(data) {
-  return request(`/api/n9e/targets/bgids`, {
+  return request(`/api/v1/metrics/targets/bgids`, {
     method: RequestMethod.Put,
     data: data,
   });
@@ -63,7 +63,7 @@ export function moveTargetBusi(data) {
 
 // 移出业务组
 export function deleteTargetBusi(data) {
-  return request(`/api/n9e/targets/bgids`, {
+  return request(`/api/v1/metrics/targets/bgids`, {
     method: RequestMethod.Delete,
     data: data,
   });
@@ -71,7 +71,7 @@ export function deleteTargetBusi(data) {
 
 // 修改对象备注
 export function updateTargetNote(data) {
-  return request(`/api/n9e/targets/note`, {
+  return request(`/api/v1/metrics/targets/note`, {
     method: RequestMethod.Put,
     data,
   });
@@ -79,14 +79,14 @@ export function updateTargetNote(data) {
 
 // 删除对象
 export function deleteTargets(data) {
-  return request(`/api/n9e/targets`, {
+  return request(`/api/v1/metrics/targets`, {
     method: RequestMethod.Delete,
     data,
   });
 }
 
 export function getTargetList(data) {
-  return request(`/api/n9e/target/list`, {
+  return request(`/api/v1/metrics/target/list`, {
     method: RequestMethod.Post,
     data,
   });

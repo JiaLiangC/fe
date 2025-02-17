@@ -501,8 +501,8 @@ export default function List(props: IProps) {
     };
     return getMonObjectList(query).then((res) => {
       return {
-        total: res.dat.total,
-        list: res.dat.list,
+        total: res.data.total,
+        list: res.data.list,
       };
     });
   };

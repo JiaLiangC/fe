@@ -54,11 +54,11 @@ export default function index(props: Props) {
               idents: _.split(values.idents, '\n'),
             };
             putTargetsBgids(data).then((res) => {
-              if (_.isEmpty(res?.dat)) {
+              if (_.isEmpty(res?.data)) {
                 setVisible(false);
                 onOk();
               } else {
-                const errData = _.map(res.dat, (val, key) => {
+                const errData = _.map(res.data, (val, key) => {
                   return {
                     host: key,
                     error_msg: val,

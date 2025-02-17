@@ -214,12 +214,12 @@ const OperationModal: React.FC<OperateionModalProps> = ({ operateType, setOperat
               onSearch={handleSearch}
               onFocus={() => {
                 getBusiGroups('').then((res) => {
-                  setFilteredBusiGroups(res.dat || []);
+                  setFilteredBusiGroups(res.data || []);
                 });
               }}
               onClear={() => {
                 getBusiGroups('').then((res) => {
-                  setFilteredBusiGroups(res.dat || []);
+                  setFilteredBusiGroups(res.data || []);
                 });
               }}
             />
@@ -270,13 +270,13 @@ const OperationModal: React.FC<OperateionModalProps> = ({ operateType, setOperat
       data.idents = data.idents.split('\n');
       requestFunc(data)
         .then((res) => {
-          if (_.isEmpty(res?.dat)) {
+          if (_.isEmpty(res?.data)) {
             setOperateType(OperateType.None);
             reloadList();
             form.resetFields();
             setConfirmLoading(false);
           } else {
-            const errData = _.map(res.dat, (val, key) => {
+            const errData = _.map(res.data, (val, key) => {
               return {
                 host: key,
                 error_msg: val,
@@ -321,7 +321,7 @@ const OperationModal: React.FC<OperateionModalProps> = ({ operateType, setOperat
 
   const fetchBusiGroup = (e) => {
     getBusiGroups(e).then((res) => {
-      setFilteredBusiGroups(res.dat || []);
+      setFilteredBusiGroups(res.data || []);
     });
   };
   const handleSearch = useCallback(debounce(fetchBusiGroup, 800), []);
